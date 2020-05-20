@@ -12,7 +12,7 @@ return [
     "layout" => [
         "region" => "layout",
         // Change here to use your own templatefile as layout
-        "template" => "anax/v2/layout/dbwebb_se",
+        "template" => "anax/v2/layout/layout",
         "data" => [
             "baseTitle" => " | oophp",
             "bodyClass" => null,

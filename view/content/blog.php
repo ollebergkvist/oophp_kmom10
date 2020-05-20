@@ -15,17 +15,16 @@ if (!$resultset) {
 }
 ?>
 
-<article>
-
+<div class="container page">
+    <h3>News</h3>
     <?php foreach ($resultset as $row) : ?>
         <section>
             <header>
-                <h1><a href=<?= url("content/blogpost") . "?route=blog/" . esc($row->slug) ?>><?= esc($row->title) ?></a></h1>
+                <h2><a href=<?= url("blogpost") . "?route=blog/" . esc($row->slug) ?>><?= esc($row->title) ?></a></h2>
 
                 <p><i>Published: <time datetime="<?= esc($row->published_iso8601) ?>" pubdate><?= esc($row->published) ?></time></i></p>
             </header>
             <?= esc($row->data) ?>
         </section>
     <?php endforeach; ?>
-
-</article>
+</div>

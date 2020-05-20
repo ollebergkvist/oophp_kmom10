@@ -40,13 +40,13 @@ CREATE TABLE `products` (
     `path` CHAR(120) UNIQUE,
     `slug` CHAR(120) UNIQUE,
     `title` VARCHAR(120),
-    `article_number` INT (4) NOT NULL UNIQUE,
-    `name` VARCHAR(100) NOT NULL,
+    `article_number` INT (4) UNIQUE,
+    `name` VARCHAR(100),
     `category` TEXT,
     `short_description` TEXT,
     `long_description` TEXT,
     `amount` INT (3),
-    `price` INT (6),
+    `price` VARCHAR (12),
     `image` VARCHAR(100) DEFAULT NULL,
     `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `updated` TIMESTAMP DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
@@ -106,27 +106,43 @@ VALUES
     ),
     (
         "blogpost-1",
-        "valkommen-till-min-blogg",
+        "prada",
         "post",
-        "Välkommen till min blogg!",
-        "Detta är en bloggpost.\n\nNär det finns länkar till andra webbplatser så kommer de länkarna att bli klickbara.\n\nhttp://dbwebb.se är ett exempel på en länk som blir klickbar.",
-        "link,nl2br"
+        "Prada",
+        "More arrivals from Prada including jackets, shirts, accessories and a pair of sneakers made in calf leather now online.\n![Alt text](img/1.jpg)",
+        "markdown,nl2br"
     ),
     (
         "blogpost-2",
-        "nu-har-sommaren-kommit",
+        "acne-studios-face-collection",
         "post",
-        "Nu har sommaren kommit",
-        "Detta är en bloggpost som berättar att sommaren har kommit, ett budskap som kräver en bloggpost.",
-        "nl2br"
+        "Acne Studios Face collection",
+        "Hoodies and sweatshirts from the Acne Studios Spring / Summer 2020 Face collection now available online.\n![Alt text](img/2.jpg)",
+        "markdown,nl2br"
     ),
     (
         "blogpost-3",
-        "nu-har-hosten-kommit",
+        "comme-des-garcons-homme-plus",
         "post",
-        "Nu har hösten kommit",
-        "Detta är en bloggpost som berättar att sommaren har kommit, ett budskap som kräver en bloggpost",
-        "nl2br"
+        "Comme des Garçons Homme Plus",
+        "More items from CDG Homme Plus, including a jacket, blazer and shorts featuring contrasting faux-fur applique panels throughout, now online.\n![Alt text](img/3.jpg)",
+        "markdown, nl2br"
+    ),
+    (
+        "blogpost-4",
+        "new-balance-m990v5",
+        "post",
+        "New Balance M990V5",
+        "The New Balance M990V5 sneakers in a light grey colorway now available online.\n![Alt text](img/4.jpg)",
+        "markdown,nl2br"
+    ),
+    (
+        "blogpost-5",
+        "stone-island",
+        "post",
+        "Stone Island",
+        "New delivery from Stone Island including a hooded sweatshirt, a half-zip overshirt and a nylon seersucker suit now online.\n![Alt text](img/5.jpg)",
+        "markdown,nl2br"
     );
 
 SELECT
@@ -146,7 +162,7 @@ DELETE FROM
     `products`;
 
 --
--- Insert values into users
+-- Insert values into products
 --
 INSERT INTO
     `products` (
@@ -155,88 +171,117 @@ INSERT INTO
         `short_description`,
         `amount`,
         `price`,
-        `category`
+        `category`,
+        `image`
     )
 VALUES
     (
         "001",
-        'Apple Macbook Pro 13\"',
-        "1,4 GHz fyrkärnig processor med Turbo Boost upp till 3,9 GHz\n128 GB lagring\nTouch Bar och Touch ID",
+        'NIKE ACG MOC 3.0 GREEN STRIKE / VIVID PURPLE',
+        "Sneakers from Nike ACG. Tie dyed and quilted textile upper in a wrapped sock like construction. Rubber toe tip and outsole with a sticky finish for good grip.",
         "10",
-        "16803",
-        "laptop"
+        "1000 SEK",
+        "shoes",
+        "img/6.jpg"
     ),
     (
         "002",
-        'Apple Macbook Pro 16\"',
-        "2,6 GHz sexkärnig processor\n512 GB lagring\nAMD Radeon Pro 5300M",
+        'COMMON PROJECTS ORIGINAL ACHILLES LOW SNEAKERS BLACK',
+        "Sneakers from Common Projects. Low top leather upper with tonal top stitches and signature gold toned serial number printed on the lateral side. Features a tonal rubber midsole.",
         "7",
-        "29999",
-        "laptop"
+        "3700 SEK",
+        "shoes",
+        "img/7.jpg"
     ),
     (
         "003",
-        'Apple iMac 21.5\"',
-        "2,3 GHz dubbelkärnig processor med Turbo Boost upp till 3,6 GHz\n1 TB lagring",
+        'COMME DES GARÇONS PLAY X CONVERSE CHUCK TAYLOR 70 BIG HEART LOW BLACK',
+        "Sneakers from Comme des Garçons Play made in collaboration with Converse. Canvas upper with a contrasting rubber toe cap and midsole. Heart print on the outer side and two metal eyelets on the inner side. Flat laces through metal eyelets. Contrasting top stitching throughout.",
         "9",
-        "14071",
-        "desktop"
+        "1500 SEK",
+        "shoes",
+        "img/8.jpg"
     ),
     (
         "004",
-        'Apple iMac Pro 27\"',
-        "3,2 GHz åttakärnig Intel Xeon W-processor, Turbo Boost upp till 4,2 GHz",
-        "13",
-        "57075",
-        "desktop"
+        'CAV EMPT WAVE STRIPE ZIP JACKET KHAKI',
+        "Jacket from Cav Empt. Made from a cotton and nylon blend with contrasting wave stripes throughout. Features a spread collar, front zip closure and a single chest pocket. Cotton patch on the back and a rubber logo patch is placed on the left sleeve. Back yoke with twin pleats. Straight hem and straight cuffs.",
+        "3",
+        "6300 SEK",
+        "jackets",
+        "img/9.jpg"
     ),
     (
         "005",
-        'Apple MacBook Air',
-        "1,1 GHz dubbelkärnig Core i3-processor med Turbo Boost upp till 3,2 GHz\n256 GB lagring\nTouch I",
-        "11",
-        "12995",
-        "desktop"
+        'COMME DES GARÇONS HOMME PLUS COATED PRINTED PANEL COACH JACKET BLACK',
+        "Coach jacket from Comme des Garçons Homme Plus. Made from a coated rayon and cotton blend with contrasting faux-fur applique panels throughout. Features a spread collar, full snap-button front closure and two slanted pockets on the front. Oversized printed logo on the back. Straight cuffs and a straight hem with drawstrings for an adjustable fit.",
+        "4",
+        "13800 SEK",
+        "jackets",
+        "img/10.jpg"
     ),
     (
         "006",
-        'Apple Mac Pro',
-        "3,5 GHz åttakärnig Intel Xeon W-processor, Turbo Boost upp till 4,0 GHz",
-        "5",
-        "71995",
-        "desktop"
+        'UNDERCOVER CINDY SHERMAN DOUBLE BREASTED WOOL PATCH BLAZER BLACK',
+        "Blazer from Undercover made from wool with a contrasting portrait patch on the back. Features darted front with button closure, peaked lapels, a single chest pocket and two front patch pockets. Fully lined and features two inner pockets. Buttoned cuffs and straight hem with double vents at the back.",
+        "2",
+        "12000 SEK",
+        "jackets",
+        "img/11.jpg"
     ),
     (
         "007",
-        'Apple Mac mini',
-        "3,6 GHz fyrkärnig processor\n256 GB lagring",
+        'COMME DES GARÇONS PLAY SMALL HEART LS T-SHIRT STRIPE GREEN',
+        "T-shirt from Comme des Garçons Play. Made from a striped cotton fabric. Ribbed round-neck. Small sewn-on logo patch on the chest. Long sleeves and a straight hem.",
         "3",
-        "10495",
-        "desktop"
+        "1300 SEK",
+        "t-shirts",
+        "img/12.jpg"
     ),
     (
         "008",
-        'Apple Pro Display XDR',
-        "32 tum, Retina 6K. Enastående färgprecision. Enormt stor betraktningsvinkel. Och XDR (Extreme Dynamic Range).",
-        "8",
-        "59995",
-        "display"
+        'NIKE ACG VORTEX T-SHIRT SUMMIT WHITE',
+        "T-shirt from Nike ACG. Made from cotton jersey with a ribbed crew neck and short sleeves. Large vortex logo print on the back and customary ’ACG’ triangle logo print on the chest.",
+        "4",
+        "450 SEK",
+        "t-shirts",
+        "img/13.jpg"
     ),
     (
         "009",
-        'Apple iPad Air',
-        "Med iPad Air får fler än någonsin tillgång till vår mest kraftfulla teknik. A12 Bionic-chippet med Neural Engine. 10,5‑tums Retina-skärm med True Tone. Stöd för Apple Pencil och Smart Keyboard. Knappt 470 gram och 6,1 mm. Ett kraftpaket du kan bära med dig överallt.",
-        "13",
-        "6298",
-        "tablet"
+        'ARIES NO PROBLEMO T-SHIRT BLACK',
+        "T-shirt from Aries. Features a ribbed crew neck, short sleeves and a contrasting chest print.",
+        "4",
+        "800 SEK",
+        "t-shirts",
+        "img/14.jpg"
     ),
     (
         "010",
-        'Apple iPhone 11',
-        "Ett helt nytt system med dubbla kameror. Vidga dina vyer från vidvinkel till ultravidvinkel. Det omgjorda gränssnittet använder den nya kameran med ultravidvinkel för att visa vad som händer utanför bild – och låter dig ta in det i bilden. Filma och redigera videor lika enkelt som du redigerar bilder. Det här är världens mest populära kamera – nu med helt nya perspektiv.",
-        "14",
-        "9195",
-        "mobile"
+        'SUN BUDDIES AKIRA SUNGLASSES TRANSPARENT GREY',
+        "Sunglasses from Sun Buddies. Semi transparent vintage inspired frame in a grey colorway, handmade of Italian acetate. Black Carl Zeiss lenses with 100% UV protection and a seven bar hinge with two visible rivets on the temple. Comes in a sliding paperboard box and an orange faux leather case.",
+        "5",
+        "1300 SEK",
+        "eyewear",
+        "img/15.jpg"
+    ),
+    (
+        "011",
+        'SUN BUDDIES ZINEDINE SUNGLASSES TORTOISE',
+        "Sunglasses from Sun Buddies. Original tortoise patterned vintage inspired biblio frame in brown and yellow. Handmade of Italian acetate. Brown Carl Zeiss lenses with 100% UV protection and a five bar hinge with two visible rivets on temple. Comes in a sliding paperboard box and faux leather case in orange. Cleaning cloth included.",
+        "4",
+        "1400 SEK",
+        "eyewear",
+        "img/16.jpg"
+    ),
+    (
+        "012",
+        'SUN BUDDIES OZZY SUNGLASSES SILVER / DARK BLUE',
+        "Sunglasses from Sun Buddies. Round 70’s inspired metal frame in a silver colorway with blue colored temple tips, handmade of stainless steel and Italian acetate. Blue Carl Zeiss lenses with 100% UV protection and a three bar hinge with vintage inspired details on the temple. Comes in a sliding paperboard box and an orange faux leather case.",
+        "3",
+        "1500 SEK",
+        "eyewear",
+        "img/17.jpg"
     );
 
 SELECT
@@ -277,7 +322,7 @@ VALUES
         "John",
         "Doe",
         "johndoe@gmail.com",
-        "admin"
+        "user"
     ),
     (
         "jane doe",
@@ -285,7 +330,7 @@ VALUES
         "Jane",
         "Doe",
         "janedoe@gmail.com",
-        "admin"
+        "user"
     );
 
 SELECT
