@@ -10,12 +10,9 @@ namespace Anax\View;
 <div class="container page">
     <h1>Update user</h1>
     <form method="post">
-        <!-- <div class="form-group">
-            <input type="hidden" name="contentId" value="<?= esc($user->id) ?>" />
-        </div> -->
         <div class="form-group">
             <label>Username:</label>
-            <input type="text" class="form-control" name="username" placeholder="Enter username" value="<?= esc($user->username) ?>" required>
+            <input type="text" class="form-control" name="username" placeholder="Enter username" value="<?= esc($user->username) ?>" readonly>
         </div>
         <div class="form-group">
             <label>Firstname:</label>
@@ -33,9 +30,8 @@ namespace Anax\View;
             <label>Password:</label>
             <input type="password" class="form-control" name="password" placeholder="Enter password" value="<?= esc($user->password) ?>" required>
         </div>
-        <p><?= $message ?></p>
         <button class="btn btn-primary" type="submit" name="doSave"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
         <button class="btn btn-primary" type="reset"><i class="fa fa-undo" aria-hidden="true"></i> Reset</button>
-        <input type="submit" class="btn btn-primary btn-block" name="logout" value="Logout">
+        <button class="btn btn-primary" type="submit" name="logout" formaction="logout"><i class="fas fa-sign-out-alt" aria-hidden="true"></i> Logout</button>
     </form>
 </div>

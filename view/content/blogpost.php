@@ -8,7 +8,7 @@ namespace Anax\View;
 
 ?>
 
-<div class="container">
+<div class="container page">
     <article>
         <header>
             <h1><?= esc($content->title) ?></h1>

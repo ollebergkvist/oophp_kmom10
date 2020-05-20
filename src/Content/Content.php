@@ -92,15 +92,16 @@ class Content
         $this->db->connect();
 
         // SQL statement
-        $sql = "SELECT * FROM users WHERE username = ? AND rights = ?;";
+        $sql = "SELECT * FROM users WHERE username = ? AND rights = 'admin'";
 
         // Executes SQL statement and fetches data from db
-        $result = $this->db->executeFetch($sql, [$username, "admin"]);
+        $result = $this->db->executeFetch($sql, [$username]);
 
         // Verifies result
         if ($result) {
             return true;
         }
+
         return false;
     }
 }

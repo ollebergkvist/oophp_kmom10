@@ -22,6 +22,10 @@ i {
     margin-top: 5rem !important;
 }
 
+.btn.btn-danger.btn-block {
+    margin-top: 4rem;
+}
+
 /* Hero style
 -------------------------------------------------- */
 .jumbotron.hero {

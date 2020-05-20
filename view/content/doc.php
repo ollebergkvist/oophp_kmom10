@@ -10,6 +10,7 @@ namespace Anax\View;
 
 <div class="container page">
     <h3>Kodstruktur</h3>
+    <hr>
     <p>
         Kodstruktur för webbplatsen. Jag har gjort tre olika klasser som styr webbplatsens innehåll: Products, Blog, User och Index.
     </p>

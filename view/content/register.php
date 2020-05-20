@@ -8,18 +8,19 @@ namespace Anax\View;
 
 ?>
 <div class="container page">
-    <h1>Register</h1>
+    <h3>Register</h3>
+    <hr>
     <form method="post">
         <div class="form-group">
             <label>Username:</label>
             <input type="text" class="form-control" name="username" placeholder="Enter username" required>
         </div>
         <div class="form-group">
-            <label>Firstname:</label>
+            <label>First name:</label>
             <input type="text" class="form-control" name="firstname" placeholder="Enter first name" required>
         </div>
         <div class="form-group">
-            <label>Lastname:</label>
+            <label>Last name:</label>
             <input type="text" class=" form-control" name="lastname" placeholder="Enter last name" required>
         </div>
         <div class="form-group">

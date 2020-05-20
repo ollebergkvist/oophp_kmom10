@@ -1163,8 +1163,7 @@ class ContentController implements AppInjectableInterface
      */
     public function loginAction(): object
     {
-        // Defines variables
-        $page = $this->app->page;
+        // Framework variables
         $request = $this->app->request;
         $session = $this->app->session;
         $response = $this->app->response;
@@ -1176,9 +1175,12 @@ class ContentController implements AppInjectableInterface
         if ($request->getPost("login")) {
             $username = $request->getPost("username");
             $password = $request->getPost("password");
-            if ($this->content->login($username, $password)) {
-                $session->set("loggedin", $username);
+            if ($this->content->login($username, $password) && $this->content->permission($username)) {
+                $session->set("loggedIn", $username);
                 $response->redirect("admin");
+            } else if ($this->content->login($username, $password)) {
+                $session->set("loggedIn", $username);
+                $response->redirect("user");
             } else {
                 $message = "Wrong username and or password";
             }
@@ -1204,13 +1206,21 @@ class ContentController implements AppInjectableInterface
 
     /**
      * This method is handler for the route:
-     * GET mountpoint/logout
+     * ANY mountpoint/logout
      *
      * @return object
      *
      */
     public function logoutAction(): object
     {
+        // Framework variables
+        $request = $this->app->request;
+        $session = $this->app->session;
+        $response = $this->app->response;
+
+        // Retrieve value from session
+        $user = $session->get("loggedIn");
+
         // Sets webpage title
         $title = "Logout";
 
@@ -1221,8 +1231,14 @@ class ContentController implements AppInjectableInterface
         $data = [
             "title" => $title,
             "titleExtended" => $titleExtended,
+            "user"      => $user
 
         ];
+
+        if ($request->getPost("logout")) {
+            $session->delete("loggedIn");
+            $response->redirect("login");
+        }
 
         // Adds route and sends data array to view
         $this->app->page->add("content/logout", $data);
@@ -1442,10 +1458,10 @@ class ContentController implements AppInjectableInterface
         $this->app->db->connect();
 
         // Retrieve content id
-        $userName = getGet("username");
+        $userName = $this->app->session->get("loggedIn");
 
         // SQL statement
-        $sql = "SELECT * FROM user WHERE username = ?;";
+        $sql = "SELECT * FROM users WHERE username = ?;";
 
         // Fetches data from db and stores in $resultset
         $user = $this->app->db->executeFetch($sql, [$userName]);
@@ -1492,7 +1508,7 @@ class ContentController implements AppInjectableInterface
             $this->app->db->execute($sql, array_values($params));
 
             // Redirects
-            return $this->app->response->redirect("content/user");
+            return $this->app->response->redirect("user");
         }
     }
 }
