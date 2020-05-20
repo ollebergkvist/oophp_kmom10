@@ -15,11 +15,20 @@ if (!$resultset2) {
 ?>
 <div class="jumbotron hero">
     <div class="container">
-        <!-- <p>This is a modified jumbotron that occupies the entire horizontal space of its parent.</p> -->
+    </div>
+</div>
+<div class="container"></div>
+<div class="container">
+    <h2>Latest news</h2>
+    <div class="jumbotron jumbotron-fluid featured-blogpost p-3 p-md-5">
+        <div class="col-md-6 px-0">
+            <h1 class="display-4 text-dark">Stone Island</h1>
+            <p class="lead my-3 text-dark">New delivery from Stone Island including a hooded sweatshirt, a half-zip overshirt and a nylon seersucker suit now online.</p>
+            <p class="lead mb-0 text-dark"><a href="blogpost?route=blog/stone-island" class="text-white font-weight-bold text-dark">Continue reading...</a></p>
+        </div>
     </div>
 </div>
 <div class="container news">
-    <h2>Latest news</h2>
     <div class="row">
         <?php $id = -1;
         foreach ($resultset as $row) :
@@ -141,6 +150,27 @@ if (!$resultset2) {
                         <h5 class="card-title"><?= $row->name ?></h5>
                         <p class="card-text"><?= $row->short_description ?></p>
                         <p class="card-text"><?= $row->price ?></p>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+</div>
+<div class="container new-arrivals">
+    <h2>Sale</h2>
+    <div class="row">
+        <?php $id = -1;
+        foreach ($resultset4 as $row) :
+            $id++; ?>
+            <div class="col-md-4">
+                <div class="card-mb-4 shadow-sm">
+                    <img class="card-img-top" src="<?= $row->image  ?>" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title"><?= $row->name ?></h5>
+                        <p class="card-text"><?= $row->short_description ?></p>
+                        <p class="card-text price" style="text-decoration: line-through"><?= $row->price ?></p>
+                        <p class="card-text text-danger"><?= $newPrice = (intval($row->price) / 1.25) ?> SEK -25%</p>
+
                     </div>
                 </div>
             </div>

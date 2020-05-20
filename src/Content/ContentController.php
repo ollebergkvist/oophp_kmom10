@@ -48,11 +48,13 @@ class ContentController implements AppInjectableInterface
         $sql = "SELECT * FROM content WHERE `type` = 'post' LIMIT 3;";
         $sql2 = "SELECT * FROM products LIMIT 3;";
         $sql3 = "SELECT * FROM products WHERE article_number = '010';";
+        $sql4 = "SELECT * FROM products WHERE id = '11' OR id = '5' OR id = 8;";
 
         // Fetches data from db and stores in $resultset
         $resultset = $this->app->db->executeFetchAll($sql);
         $resultset2 = $this->app->db->executeFetchAll($sql2);
         $resultset3 = $this->app->db->executeFetchAll($sql3);
+        $resultset4 = $this->app->db->executeFetchAll($sql4);
 
         // Data array
         $data = [
@@ -60,7 +62,8 @@ class ContentController implements AppInjectableInterface
             "titleExtended" => $titleExtended,
             "resultset" => $resultset,
             "resultset2" => $resultset2,
-            "resultset3" => $resultset3
+            "resultset3" => $resultset3,
+            "resultset4" => $resultset4
         ];
 
         // Adds route and sends data array to view

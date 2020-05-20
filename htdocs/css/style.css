@@ -26,6 +26,14 @@ i {
     margin-top: 4rem;
 }
 
+.featured-blogpost {
+    background-color: #e9e9eb !important;
+}
+
+.card-text.price {
+    margin-bottom: 0;
+}
+
 /* Hero style
 -------------------------------------------------- */
 .jumbotron.hero {
