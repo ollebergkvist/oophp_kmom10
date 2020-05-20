@@ -33,7 +33,7 @@ if (!$resultset) {
             foreach ($resultset as $row) :
                 $id++; ?>
                 <tr>
-                    <td><?= $row->article_number ?></td>
+                    <td><a href=<?= url("product") . "?route=product/" . esc($row->article_number) ?>><?= esc($row->article_number) ?></td>
                     <td><?= $row->name ?></td>
                     <td><?= $row->category ?></td>
                     <td><?= $row->short_description ?></td>

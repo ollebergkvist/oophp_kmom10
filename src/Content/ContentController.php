@@ -637,6 +637,63 @@ class ContentController implements AppInjectableInterface
 
     /**
      * This method is handler for the route:
+     * GET mountpoint/product
+     *
+     * @return object
+     *
+     */
+    public function productActionGet(): object
+    {
+        // Retrieves route
+        $route = getGet("route", "");
+
+        // Connects to db
+        $this->app->db->connect();
+
+
+
+        if (substr($route, 0, 8) === "product/") {
+            $sql = <<<EOD
+                    SELECT
+                        *
+                    FROM products
+                    WHERE
+                        id = ?
+                    ;
+                    EOD;
+
+            // Retrieves slug
+            $slug = substr($route, 8);
+
+            // Executes SQL and fetches data
+            // Saves data in content
+            $content = $this->app->db->executeFetch($sql, [$slug]);
+
+            // Sets title
+            $title = $content->title;
+
+            // Error handling
+            if (!$content) {
+                $title = "404";
+                return $this->app->response->redirect("error");
+            }
+        }
+
+        // Data array
+        $data = [
+            "title" => $title,
+            "content" => $content
+        ];
+
+        // Adds route and sends data array to view
+        $this->app->page->add("content/product", $data);
+
+        // Renders page
+        return $this->app->page->render($data);
+    }
+
+    /**
+     * This method is handler for the route:
      * GET mountpoint/delete
      *
      * @return object

@@ -8,12 +8,18 @@ namespace Anax\View;
 
 ?>
 
-<div class="container">
-    <article>
-        <header>
-            <h1><?= esc($content->title) ?></h1>
-            <p><i>Latest update: <time datetime="<?= esc($content->modified_iso8601) ?>" pubdate><?= esc($content->modified) ?></time></i></p>
-        </header>
-        <?= $content->data ?>
-    </article>
-</div>
+<div class="container page">
+    <h1><?= esc($content->name) ?></h1>
+    <h4><?= esc($content->category) ?></h4>
+    <div class="row">
+        <div class="col">
+            <img class="img-fluid" src="<?= $content->image ?>">
+        </div>
+        <div class="col-8">
+            <p><?= $content->short_description ?></p>
+            <p><?= $content->price ?></p>
+        </div>
+
+
+
+    </div>
