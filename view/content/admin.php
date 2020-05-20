@@ -15,6 +15,18 @@ if (!$resultset) {
 ?>
 
 <div class="container">
+    <form method="get" class="d-inline">
+        <legend>Search</legend>
+        <label>Title (use % as wildcard):</label>
+        <input type="search" class="form-control mb-2" name="searchTitle" value="<?= $searchTitle ?>" />
+        <input type="submit" class="btn btn-primary d-inline" name="doSearch" value="Search">
+    </form>
+    <form method="get" class="d-inline">
+        <input type="submit" class="btn btn-primary d-inline" name="viewAll" value="View all" formaction="admin">
+    </form>
+</div>
+
+<div class="container mt-4">
     <table class="table table-hover">
         <thead>
             <tr class="first">

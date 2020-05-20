@@ -8,9 +8,9 @@ namespace Anax\View;
 
 ?>
 
-<div class="container">
+<div class="container page">
     <form method="post">
-        <input type="submit" name="reset" value="Reset database">
+        <input type="submit" class="btn btn-warning btn-block" name="reset" value="Reset database">
         <?= $output ?>
     </form>
 </div>

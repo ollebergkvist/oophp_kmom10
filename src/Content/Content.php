@@ -86,6 +86,14 @@ class Content
         }
     }
 
+    /**
+     * Verifies permission
+     *
+     * @param string $str username to verify
+     *
+     * @return bool true or false depending on outcome
+     */
+
     public function permission($username)
     {
         // Connects to db
@@ -103,5 +111,39 @@ class Content
         }
 
         return false;
+    }
+
+    /**
+     * Resets database
+     *
+     * @param string $database database to reset
+     *
+     * @return void
+     */
+    public function resetDatabase($dbConfig)
+    {
+        $file   = "../sql/content/setup.sql";
+        $mysql  = "/usr/bin/mysql";
+        $dsnDetail = [];
+        preg_match("/mysql:host=(.+);dbname=([^;.]+)/", $dbConfig["config"]["dsn"], $dsnDetail);
+        $host = $dsnDetail[1];
+        $database = $dsnDetail[2];
+
+        if ($database == "olbe19") {
+            $mysql = "mysql";
+        }
+
+        $login = $dbConfig["config"]["username"];
+        $password = $dbConfig["config"]["password"];
+        $command = "$mysql -h{$host} -u{$login} -p{$password} $database < $file 2>&1";
+        $commandclean = "$mysql -h{$host} -u{$login} -pxxxxxx $database < $file 2>&1";
+        $output = [];
+        $status = null;
+        exec($command, $output, $status);
+        $output = "<p>The command was: <code>$commandclean</code>.<br>The command exit status was $status."
+            . "<br>The output from the command was:</p><pre>"
+            . print_r($output, 1);
+
+        return $database;
     }
 }

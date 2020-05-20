@@ -22,7 +22,7 @@ class ContentController implements AppInjectableInterface
      */
     public function initialize(): void
     {
-        // Initalise a new movie object, with the movie-database as argument.
+        // Initalise a new content object, with the content-database as argument.
         $this->content = new Content($this->app->db);
     }
 
@@ -170,17 +170,30 @@ class ContentController implements AppInjectableInterface
         // Connects to db
         $this->app->db->connect();
 
-        // SQL statement
-        $sql = "SELECT * FROM content;";
+        // Retrieves title
+        $searchTitle = getGet("searchTitle") ?? null;
+        $viewAll = getGet("viewAll") ?? null;
 
-        // Fetches data from db and stores in $resultset
-        $resultset = $this->app->db->executeFetchAll($sql);
+        if ($searchTitle) {
+            // SQL statement
+            $sql = "SELECT * FROM content WHERE title LIKE ?;";
+
+            // Fetches data from db and stores in $resultset
+            $resultset = $this->app->db->executeFetchAll($sql, [$searchTitle]);
+        } else {
+            // SQL statement
+            $sql = "SELECT * FROM content;";
+
+            // Fetches data from db and stores in $resultset
+            $resultset = $this->app->db->executeFetchAll($sql);
+        }
 
         // Data array
         $data = [
             "title" => $title,
             "titleExtended" => $titleExtended,
             "resultset" => $resultset,
+            "searchTitle" => $searchTitle
         ];
 
         // Includes admin header
@@ -250,7 +263,7 @@ class ContentController implements AppInjectableInterface
         }
 
         // Redirects
-        return $this->app->response->redirect("content/edit?id=$id");
+        return $this->app->response->redirect("edit?id=$id");
     }
 
     /**
@@ -320,7 +333,7 @@ class ContentController implements AppInjectableInterface
      * @return object
      *
      */
-    public function resetActionGet(): object
+    public function resetAction(): object
     {
         // Sets webpage title
         $title = "Reset database";
@@ -328,16 +341,16 @@ class ContentController implements AppInjectableInterface
         // Sets extended webpage title
         $titleExtended = " | My Content Database";
 
-        $output = null;
+        // $output = null ?? getGet(["reset"]);
 
         // Data array
         $data = [
             "title" => $title,
             "titleExtended" => $titleExtended,
-            "output" => $output
         ];
 
         // Includes admin header
+        $this->app->page->add("content/debug");
         $this->app->page->add("content/header_admin");
 
         // Adds route and sends data array to view
@@ -356,34 +369,17 @@ class ContentController implements AppInjectableInterface
      */
     public function resetActionPost(): object
     {
-        // Restore the database to its original settings
-        $file   = "sql/setup.sql";
-        $mysql  = "/usr/bin/mysql";
-        $output = null;
+        // Framework variables
+        $dbConfig = $this->app->configuration->load("database");
+        $request = $this->app->request;
 
-        // Connects to db
-        $this->app->db->connect();
-
-        // Extract hostname and databasename from dsn
-        $dsnDetail = [];
-        preg_match("/mysql:host=(.+);dbname=([^;.]+)/", $databaseConfig["dsn"], $dsnDetail);
-        $host = $dsnDetail[1];
-        $database = $dsnDetail[2];
-        $login = $databaseConfig["login"];
-        $password = $databaseConfig["password"];
-
-        if (isset($_POST["reset"]) || isset($_GET["reset"])) {
-            $command = "$mysql -h{$host} -u{$login} -p{$password} $database < $file 2>&1";
-            $output = [];
-            $status = null;
-            $res = exec($command, $output, $status);
-            $output = "<p>The command was: <code>$command</code>.<br>The command exit status was $status."
-                . "<br>The output from the command was:</p><pre>"
-                . print_r($output, 1);
+        // Verifies if reset form was submitted
+        if ($request->getPost("reset") == "Reset database") {
+            $output = $this->content->resetDatabase($dbConfig);
         }
 
         // Redirects
-        return $this->app->response->redirect("content/reset");
+        return $this->app->response->redirect("reset", $output);
     }
 
     /**
