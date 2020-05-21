@@ -3,7 +3,7 @@
 namespace Anax\View;
 
 /**
- * Template file to render create view
+ * Template file to render create blogpost view
  */
 
 ?>

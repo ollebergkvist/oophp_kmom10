@@ -3,19 +3,15 @@
 namespace Anax\View;
 
 /**
- * Template file to render admin view
+ * Template file to render header admin view
  */
 
 ?>
 
-<div class="container">
-    <h1>Admin</h1>
+<div class="container page">
     <ul class="nav">
         <li class="nav-item">
-            <a class="nav-link" href="<?= url("overview") ?>">Overview</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link active" href="<?= url("admin") ?>">Edit blogpost</a>
+            <a class="nav-link first-item" href="<?= url("admin") ?>">Edit blogpost</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="<?= url("create") ?>">Create blogpost</a>

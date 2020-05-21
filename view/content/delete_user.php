@@ -3,7 +3,7 @@
 namespace Anax\View;
 
 /**
- * Template file to render delete view
+ * Template file to render delete user view
  */
 
 ?>

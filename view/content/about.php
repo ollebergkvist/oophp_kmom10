@@ -3,7 +3,7 @@
 namespace Anax\View;
 
 /**
- * Template file to render doc view
+ * Template file to render about view
  */
 
 ?>

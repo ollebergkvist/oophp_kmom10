@@ -156,7 +156,7 @@ if (!$resultset2) {
         <?php endforeach; ?>
     </div>
 </div>
-<div class="container new-arrivals">
+<div class="container sale">
     <h2>Sale</h2>
     <div class="row">
         <?php $id = -1;

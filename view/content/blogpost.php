@@ -3,7 +3,7 @@
 namespace Anax\View;
 
 /**
- * Movie-edit view
+ * Template file to render blogpost view
  */
 
 ?>

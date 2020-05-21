@@ -3,7 +3,7 @@
 namespace Anax\View;
 
 /**
- * Template file to render pages view
+ * Template file to render products view
  */
 
 ?>

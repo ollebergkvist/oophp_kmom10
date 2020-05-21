@@ -3,7 +3,7 @@
 namespace Anax\View;
 
 /**
- * Template file to render index view
+ * Template file to render products2 view
  */
 
 ?>
@@ -27,7 +27,6 @@ if (!$resultset) {
                 <th scope="col">Stock</th>
                 <th scope="col">Created</th>
                 <th scope="col">Updated</th>
-                <th scope="col">Activated</th>
                 <th scope="col">Deleted</th>
                 <th scope="col">Actions</th>
             </tr>
@@ -46,13 +45,12 @@ if (!$resultset) {
                     <td><?= $row->amount ?></td>
                     <td><?= $row->created ?></td>
                     <td><?= $row->updated ?></td>
-                    <td><?= $row->activated ?></td>
                     <td><?= $row->deleted ?></td>
                     <td>
                         <a class="icons" href="<?= url("editproduct?id=") . $row->id ?> " title="Edit this content">
                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                         </a>
-                        <a class="icons" href="<?= url("deleteproduct?id=") . $row->id ?>" title="Edit this content">
+                        <a class="icons" href="<?= url("deleteproduct?id=") . $row->id ?>" title="Delete this content">
                             <i class="fa fa-trash-o" aria-hidden="true"></i>
                         </a>
                     </td>

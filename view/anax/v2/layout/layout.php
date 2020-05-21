@@ -29,32 +29,32 @@ namespace Anax\View;
 
     <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
         <div class="container">
-            <a class=" navbar-brand" href="#">Eshop</a>
+            <a class=" navbar-brand" href="#">ESHOP</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-center" id="navbarCollapse">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="<?= url("index") ?>">HOME <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="<?= url("index") ?>">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= url("blog") ?>">NEWS</a>
+                        <a class="nav-link" href="<?= url("blog") ?>">News</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= url("products") ?>">PRODUCTS</a>
+                        <a class="nav-link" href="<?= url("products") ?>">Products</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= url("about") ?>">ABOUT</a>
+                        <a class="nav-link" href="<?= url("about") ?>">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= url("doc") ?>">DOC</a>
+                        <a class="nav-link" href="<?= url("doc") ?>">Doc</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= url("register") ?>">REGISTER</a>
+                        <a class="nav-link" href="<?= url("register") ?>">Register</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= url("login") ?>">LOGIN</a>
+                        <a class="nav-link" href="<?= url("login") ?>">Login</a>
                     </li>
                 </ul>
             </div>

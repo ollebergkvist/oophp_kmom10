@@ -1,5 +1,10 @@
 /* Main style
 -------------------------------------------------- */
+
+a.nav-link.first-item {
+    padding-left: 0;
+}
+
 h2 {
     margin-bottom: 2rem !important;
 }
@@ -54,7 +59,7 @@ html {
 
 body {
     /* Margin bottom by footer height */
-    margin-bottom: 60px;
+    margin-bottom: 356px;
 }
 
 .footer.container.mt-5 {

@@ -48,7 +48,7 @@ class ContentController implements AppInjectableInterface
         $sql = "SELECT * FROM content WHERE `type` = 'post' LIMIT 3;";
         $sql2 = "SELECT * FROM products LIMIT 3;";
         $sql3 = "SELECT * FROM products WHERE article_number = '010';";
-        $sql4 = "SELECT * FROM products WHERE id = '11' OR id = '5' OR id = 8;";
+        $sql4 = "SELECT * FROM products WHERE article_number = '11' OR article_number = '5' OR article_number = 8;";
 
         // Fetches data from db and stores in $resultset
         $resultset = $this->app->db->executeFetchAll($sql);
@@ -68,47 +68,6 @@ class ContentController implements AppInjectableInterface
 
         // Adds route and sends data array to view
         $this->app->page->add("content/index", $data);
-
-        // Renders page
-        return $this->app->page->render($data);
-    }
-
-    /**
-     * This method is handler for the route:
-     * GET mountpoint/index
-     *
-     * @return object
-     *
-     */
-    public function overviewActionGet(): object
-    {
-        // Sets webpage title
-        $title = "Show all content";
-
-        // Sets extended webpage title
-        $titleExtended = " | My Content Database";
-
-        // Connects to db
-        $this->app->db->connect();
-
-        // SQL statement
-        $sql = "SELECT * FROM content;";
-
-        // Fetches data from db and stores in $resultset
-        $resultset = $this->app->db->executeFetchAll($sql);
-
-        // Data array
-        $data = [
-            "title" => $title,
-            "titleExtended" => $titleExtended,
-            "resultset" => $resultset,
-        ];
-
-        // Includes admin header
-        $this->app->page->add("content/header_admin");
-
-        // Adds route and sends data array to view
-        $this->app->page->add("content/show-all", $data);
 
         // Renders page
         return $this->app->page->render($data);
@@ -147,60 +106,6 @@ class ContentController implements AppInjectableInterface
 
         // Adds route and sends data array to view
         $this->app->page->add("content/products", $data);
-
-        // Renders page
-        return $this->app->page->render($data);
-    }
-
-    /**
-     * This method is handler for the route:
-     * GET mountpoint/admin
-     *
-     * @return object
-     *
-     */
-    public function adminActionGet(): object
-    {
-        // Sets webpage title
-        $title = "Admin content";
-
-        // Sets extended webpage title
-        $titleExtended = " | My Content Database";
-
-        // Connects to db
-        $this->app->db->connect();
-
-        // Retrieves title
-        $searchTitle = getGet("searchTitle") ?? null;
-        $viewAll = getGet("viewAll") ?? null;
-
-        if ($searchTitle) {
-            // SQL statement
-            $sql = "SELECT * FROM content WHERE title LIKE ?;";
-
-            // Fetches data from db and stores in $resultset
-            $resultset = $this->app->db->executeFetchAll($sql, [$searchTitle]);
-        } else {
-            // SQL statement
-            $sql = "SELECT * FROM content;";
-
-            // Fetches data from db and stores in $resultset
-            $resultset = $this->app->db->executeFetchAll($sql);
-        }
-
-        // Data array
-        $data = [
-            "title" => $title,
-            "titleExtended" => $titleExtended,
-            "resultset" => $resultset,
-            "searchTitle" => $searchTitle
-        ];
-
-        // Includes admin header
-        $this->app->page->add("content/header_admin");
-
-        // Adds route and sends data array to view
-        $this->app->page->add("content/admin", $data);
 
         // Renders page
         return $this->app->page->render($data);
@@ -333,7 +238,7 @@ class ContentController implements AppInjectableInterface
      * @return object
      *
      */
-    public function resetAction(): object
+    public function resetActionGet(): object
     {
         // Sets webpage title
         $title = "Reset database";
@@ -341,16 +246,14 @@ class ContentController implements AppInjectableInterface
         // Sets extended webpage title
         $titleExtended = " | My Content Database";
 
-        // $output = null ?? getGet(["reset"]);
-
         // Data array
         $data = [
             "title" => $title,
             "titleExtended" => $titleExtended,
+            "output" => $output ?? null
         ];
 
         // Includes admin header
-        $this->app->page->add("content/debug");
         $this->app->page->add("content/header_admin");
 
         // Adds route and sends data array to view
@@ -380,132 +283,6 @@ class ContentController implements AppInjectableInterface
 
         // Redirects
         return $this->app->response->redirect("reset", $output);
-    }
-
-    /**
-     * This method is handler for the route:
-     * GET mountpoint/pages
-     *
-     * @return object
-     *
-     */
-    public function pagesActionGet(): object
-    {
-        // Sets webpage title
-        $title = "View pages";
-
-        // Sets extended webpage title
-        $titleExtended = " | My Content Database";
-
-        // Connects to db
-        $this->app->db->connect();
-
-        // SQL statement
-        $sql = <<<EOD
-        SELECT
-            *,
-            CASE
-                WHEN (deleted <= NOW()) THEN "isDeleted"
-                WHEN (published <= NOW()) THEN "isPublished"
-                ELSE "notPublished"
-            END AS status
-        FROM content
-        WHERE type=?
-        ;
-        EOD;
-
-        // Executes SQL and fetches data
-        $resultset = $this->app->db->executeFetchAll($sql, ["page"]);
-
-        // Data array
-        $data = [
-            "title" => $title,
-            "titleExtended" => $titleExtended,
-            "resultset" => $resultset
-        ];
-
-        // Includes admin header
-        $this->app->page->add("content/header_admin");
-
-        // Adds route and sends data array to view
-        $this->app->page->add("content/pages", $data);
-
-        // Renders page
-        return $this->app->page->render($data);
-    }
-
-    /**
-     * This method is handler for the route:
-     * GET mountpoint/pages
-     *
-     * @return object
-     *
-     */
-    public function pageActionGet(): object
-    {
-        // // Sets webpage title
-        $title = "View page";
-
-        // Sets extended webpage title
-        $titleExtended = " | My Content Database";
-
-        // Retrieves route
-        $route = getGet("route", "");
-
-        // Connects to db
-        $this->app->db->connect();
-
-        // SQL statement
-        $sql = <<<EOD
-        SELECT
-            *,
-            DATE_FORMAT(COALESCE(updated, published), '%Y-%m-%dT%TZ') AS modified_iso8601,
-            DATE_FORMAT(COALESCE(updated, published), '%Y-%m-%d') AS modified
-        FROM content
-        WHERE
-            path = ?
-            AND type = ?
-            AND (deleted IS NULL OR deleted > NOW())
-            AND published <= NOW()
-        ;
-        EOD;
-
-        // Executes SQL and fetches data
-        $content = $this->app->db->executeFetch($sql, [$route, "page"]);
-
-        // Error handling
-        if (!$content) {
-            $title = "404";
-            return $this->app->response->redirect("content/error");
-        }
-
-        // Creates instance of class
-        $textFilter = new MyTextFilter();
-
-        // Retrieves filters and stores as comma seperated strings in $filters
-        $filters = $content->filter;
-
-        // Creates array of the values from $filters
-        $filtersArray = explode(",", $filters);
-
-        // Parses data thru text filters
-        $content->data = $textFilter->parse($content->data, $filtersArray);
-
-        // // Sets webpage title
-        $title = $content->title;
-
-        // Data array
-        $data = [
-            "title" => $title,
-            "titleExtended" => $titleExtended,
-            "content" => $content
-        ];
-
-        // Adds route and sends data array to view
-        $this->app->page->add("content/page", $data);
-
-        // Renders page
-        return $this->app->page->render($data);
     }
 
     /**
@@ -557,7 +334,7 @@ class ContentController implements AppInjectableInterface
 
     /**
      * This method is handler for the route:
-     * GET mountpoint/blog
+     * GET mountpoint/blogpost
      *
      * @return object
      *
@@ -601,7 +378,7 @@ class ContentController implements AppInjectableInterface
             // Error handling
             if (!$content) {
                 $title = "404";
-                return $this->app->response->redirect("content/error");
+                return $this->app->response->redirect("error");
             }
         }
 
@@ -765,7 +542,7 @@ class ContentController implements AppInjectableInterface
 
     /**
      * This method is handler for the route:
-     * GET mountpoint/delete
+     * GET mountpoint/deleteuser
      *
      * @return object
      *
@@ -809,7 +586,7 @@ class ContentController implements AppInjectableInterface
 
     /**
      * This method is handler for the route:
-     * POST mountpoint/delete
+     * POST mountpoint/deleteuser
      *
      * @return object
      *
@@ -835,7 +612,7 @@ class ContentController implements AppInjectableInterface
 
     /**
      * This method is handler for the route:
-     * GET mountpoint/delete
+     * GET mountpoint/deleteproduct
      *
      * @return object
      *
@@ -879,7 +656,7 @@ class ContentController implements AppInjectableInterface
 
     /**
      * This method is handler for the route:
-     * POST mountpoint/delete
+     * POST mountpoint/deleteproduct
      *
      * @return object
      *
@@ -1183,7 +960,7 @@ class ContentController implements AppInjectableInterface
 
     /**
      * This method is handler for the route:
-     * GET mountpoint/404
+     * GET mountpoint/error
      *
      * @return object
      *
@@ -1334,7 +1111,7 @@ class ContentController implements AppInjectableInterface
 
     /**
      * This method is handler for the route:
-     * GET mountpoint/about
+     * GET mountpoint/doc
      *
      * @return object
      *
@@ -1403,7 +1180,7 @@ class ContentController implements AppInjectableInterface
         $data = [
             "title" => $title,
             "titleExtended" => $titleExtended,
-            "message" => $message
+            "message" => $message ?? null
         ];
 
         // Adds route and sends data array to view
@@ -1456,7 +1233,7 @@ class ContentController implements AppInjectableInterface
 
     /**
      * This method is handler for the route:
-     * GET mountpoint/users
+     * GET mountpoint/products
      *
      * @return object
      *
@@ -1566,5 +1343,93 @@ class ContentController implements AppInjectableInterface
             // Redirects
             return $this->app->response->redirect("user");
         }
+    }
+
+    /**
+     * This method is handler for the route:
+     * ANY mountpoint/admin
+     *
+     * @return object
+     *
+     */
+    public function adminAction(): object
+    {
+        // Sets webpage title
+        $title = "Show all content with sorting and pagination";
+
+        // Sets extended webpage title
+        $titleExtended = " | My Content Database";
+
+        // Retrieves title
+        $searchTitle = getGet("searchTitle") ?? null;
+
+        // Connects to db
+        $this->app->db->connect();
+
+        if ($searchTitle) {
+            // SQL statement
+            $sql = "SELECT * FROM content WHERE title LIKE ?;";
+
+            // Fetches data from db and stores in $resultset
+            $resultset = $this->app->db->executeFetchAll($sql, [$searchTitle]);
+        } else {
+            // Get number of hits per page
+            $hits = getGet("hits", 8);
+            if (!(is_numeric($hits) && $hits > 0 && $hits <= 8)) {
+                die("Not valid for hits.");
+            }
+
+            // SQL statement
+            $sql = "SELECT COUNT(id) AS max FROM content;";
+
+            // Get max number of pages
+            $max = $this->app->db->executeFetchAll($sql);
+            $max = ceil($max[0]->max / $hits);
+
+            // Get current page
+            $page = getGet("page", 1);
+            if (!(is_numeric($hits) && $page > 0 && $page <= $max)) {
+                die("Not valid for page.");
+            }
+
+            $offset = $hits * ($page - 1);
+
+            // Only these values are valid
+            $columns = ["id", "title", "type", "published", "created", "updated", "deleted"];
+            $orders = ["asc", "desc"];
+
+            // Get settings from GET or use defaults
+            $orderBy = getGet("orderby") ?: "id";
+            $order = getGet("order") ?: "asc";
+
+            // Incoming matches valid value sets
+            if (!(in_array($orderBy, $columns) && in_array($order, $orders))) {
+                die("Not valid input for sorting.");
+            }
+
+            // SQL statement
+            $sql = "SELECT * FROM content ORDER BY $orderBy $order LIMIT $hits OFFSET $offset;";
+
+            // Fetches data from db and stores in $resultset
+            $resultset = $this->app->db->executeFetchAll($sql);
+        }
+
+        // Data array
+        $data = [
+            "title" => $title,
+            "titleExtended" => $titleExtended,
+            "resultset" => $resultset,
+            "max" => $max,
+            "searchTitle" => $searchTitle
+        ];
+
+        // Includes admin header
+        $this->app->page->add("content/header_admin");
+
+        // Adds route and sends data array to view
+        $this->app->page->add("content/admin", $data);
+
+        // Renders page
+        return $this->app->page->render($data);
     }
 }

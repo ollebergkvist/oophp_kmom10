@@ -3,7 +3,7 @@
 namespace Anax\View;
 
 /**
- * Template file to render index view
+ * Template file to render users view
  */
 
 ?>

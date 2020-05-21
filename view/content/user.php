@@ -3,7 +3,7 @@
 namespace Anax\View;
 
 /**
- * Template file to render a view for the login.
+ * Template file to render a view for the user
  */
 
 ?>

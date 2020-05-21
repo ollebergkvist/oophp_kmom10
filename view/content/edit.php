@@ -3,7 +3,7 @@
 namespace Anax\View;
 
 /**
- * Template file to render edit view
+ * Template file to render edit blogpost view
  */
 
 $filters = ["bbcode", "link", "markdown", "nl2br"];
