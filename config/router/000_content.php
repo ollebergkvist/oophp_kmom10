@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Dice controller
+ * Content controller
  */
 return [
     // All routes in order

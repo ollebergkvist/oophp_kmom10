@@ -72,9 +72,8 @@ class Content
         if (count($result) > 0) {
             // Returns bool
             return false;
-        }
-        // If user don't exists registers user and returns true
-        else {
+        } else {
+            // If user don't exists registers user and returns true
             // SQL statement
             $sql = "INSERT INTO users (`username`, `firstname`, `lastname`, `password`, `email`) VALUES (?, ?, ?, ?, ?)";
 

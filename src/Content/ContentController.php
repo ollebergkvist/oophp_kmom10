@@ -39,7 +39,7 @@ class ContentController implements AppInjectableInterface
         $title = "Home";
 
         // Sets extended webpage title
-        $titleExtended = " | My Content Database";
+        $titleExtended = " | Eshop";
 
         // Connects to db
         $this->app->db->connect();
@@ -86,7 +86,7 @@ class ContentController implements AppInjectableInterface
         $title = "Products";
 
         // Sets extended webpage title
-        $titleExtended = " | My Content Database";
+        $titleExtended = " | Eshop";
 
         // Connects to db
         $this->app->db->connect();
@@ -124,7 +124,16 @@ class ContentController implements AppInjectableInterface
         $title = "Create content";
 
         // Sets extended webpage title
-        $titleExtended = " | My Content Database";
+        $titleExtended = " | Eshop";
+
+        // Framework variables
+        $response = $this->app->response;
+        $session = $this->app->session;
+
+        // Verifies if user is logged in
+        if (!$session->get("loggedIn")) {
+            $response->redirect("login");
+        };
 
         // Data array
         $data = [
@@ -184,7 +193,16 @@ class ContentController implements AppInjectableInterface
         $title = "Create product";
 
         // Sets extended webpage title
-        $titleExtended = " | My Content Database";
+        $titleExtended = " | Eshop";
+
+        // Framework variables
+        $response = $this->app->response;
+        $session = $this->app->session;
+
+        // Verifies if user is logged in
+        if (!$session->get("loggedIn")) {
+            $response->redirect("login");
+        };
 
         // Data array
         $data = [
@@ -244,7 +262,16 @@ class ContentController implements AppInjectableInterface
         $title = "Reset database";
 
         // Sets extended webpage title
-        $titleExtended = " | My Content Database";
+        $titleExtended = " | Eshop";
+
+        // Framework variables
+        $response = $this->app->response;
+        $session = $this->app->session;
+
+        // Verifies if user is logged in
+        if (!$session->get("loggedIn")) {
+            $response->redirect("login");
+        };
 
         // Data array
         $data = [
@@ -298,7 +325,7 @@ class ContentController implements AppInjectableInterface
         $title = "View blog";
 
         // Sets extended webpage title
-        $titleExtended = " | My Content Database";
+        $titleExtended = " | Eshop";
 
         // Connects to db
         $this->app->db->connect();
@@ -478,7 +505,16 @@ class ContentController implements AppInjectableInterface
         $title = "Delete content";
 
         // Sets extended webpage title
-        $titleExtended = " | My Content Database";
+        $titleExtended = " | Eshop";
+
+        // Framework variables
+        $response = $this->app->response;
+        $session = $this->app->session;
+
+        // Verifies if user is logged in
+        if (!$session->get("loggedIn")) {
+            $response->redirect("login");
+        };
 
         // Connects to db
         $this->app->db->connect();
@@ -553,7 +589,16 @@ class ContentController implements AppInjectableInterface
         $title = "Delete user";
 
         // Sets extended webpage title
-        $titleExtended = " | My Content Database";
+        $titleExtended = " | Eshop";
+
+        // Framework variables
+        $response = $this->app->response;
+        $session = $this->app->session;
+
+        // Verifies if user is logged in
+        if (!$session->get("loggedIn")) {
+            $response->redirect("login");
+        };
 
         // Connects to db
         $this->app->db->connect();
@@ -623,7 +668,17 @@ class ContentController implements AppInjectableInterface
         $title = "Delete product";
 
         // Sets extended webpage title
-        $titleExtended = " | My Content Database";
+        $titleExtended = " | Eshop";
+
+        // Framework variables
+        $response = $this->app->response;
+        $session = $this->app->session;
+
+        // Verifies if user is logged in
+        if (!$session->get("loggedIn")) {
+            $response->redirect("login");
+        };
+
 
         // Connects to db
         $this->app->db->connect();
@@ -693,13 +748,16 @@ class ContentController implements AppInjectableInterface
         $title = "Edit content";
 
         // Sets extended webpage title
-        $titleExtended = " | My Content Database";
+        $titleExtended = " | Eshop";
 
-        // // Creates instance of TextFilter
-        // $textfilter = new \Olbe19\TextFilter\MyTextFilter();
+        // Framework variables
+        $response = $this->app->response;
+        $session = $this->app->session;
 
-        // // Calls getFilters method and stores filters in $filters
-        // $filters = $textfilter->getFilters();
+        // Verifies if user is logged in
+        if (!$session->get("loggedIn")) {
+            $response->redirect("login");
+        };
 
         // Connects to db
         $this->app->db->connect();
@@ -801,7 +859,17 @@ class ContentController implements AppInjectableInterface
         $title = "Edit product";
 
         // Sets extended webpage title
-        $titleExtended = " | My Content Database";
+        $titleExtended = " | Eshop";
+
+        // Framework variables
+        $response = $this->app->response;
+        $session = $this->app->session;
+
+        // Verifies if user is logged in
+        if (!$session->get("loggedIn")) {
+            $response->redirect("login");
+        };
+
 
         // Connects to db
         $this->app->db->connect();
@@ -887,7 +955,17 @@ class ContentController implements AppInjectableInterface
         $title = "Edit user";
 
         // Sets extended webpage title
-        $titleExtended = " | My Content Database";
+        $titleExtended = " | Eshop";
+
+        // Framework variables
+        $response = $this->app->response;
+        $session = $this->app->session;
+
+        // Verifies if user is logged in
+        if (!$session->get("loggedIn")) {
+            $response->redirect("login");
+        };
+
 
         // Connects to db
         $this->app->db->connect();
@@ -971,7 +1049,7 @@ class ContentController implements AppInjectableInterface
         $title = "404";
 
         // Sets extended webpage title
-        $titleExtended = " | My Content Database";
+        $titleExtended = " | Eshop";
 
         // Data array
         $data = [
@@ -1020,7 +1098,7 @@ class ContentController implements AppInjectableInterface
         }
 
         // Sets extended webpage title
-        $titleExtended = " | My Content Database";
+        $titleExtended = " | Eshop";
 
         // Data array
         $data = [
@@ -1058,7 +1136,7 @@ class ContentController implements AppInjectableInterface
         $title = "Logout";
 
         // Sets extended webpage title
-        $titleExtended = " | My Content Database";
+        $titleExtended = " | Eshop";
 
         // Data array
         $data = [
@@ -1093,20 +1171,19 @@ class ContentController implements AppInjectableInterface
         $title = "About";
 
         // Sets extended webpage title
-        $titleExtended = " | My Content Database";
+        $titleExtended = " | Eshop";
 
         // Data array
         $data = [
             "title" => $title,
-            "titleExtended" => $titleExtended,
-
+            "titleExtended" => $titleExtended
         ];
 
         // Adds route and sends data array to view
-        $this->app->page->add("content/about");
+        $this->app->page->add("content/about", $data);
 
         // Renders page
-        return $this->app->page->render();
+        return $this->app->page->render($data);
     }
 
     /**
@@ -1122,7 +1199,7 @@ class ContentController implements AppInjectableInterface
         $title = "Doc";
 
         // Sets extended webpage title
-        $titleExtended = " | My Content Database";
+        $titleExtended = " | Eshop";
 
         // Data array
         $data = [
@@ -1132,10 +1209,10 @@ class ContentController implements AppInjectableInterface
         ];
 
         // Adds route and sends data array to view
-        $this->app->page->add("content/doc");
+        $this->app->page->add("content/doc", $data);
 
         // Renders page
-        return $this->app->page->render();
+        return $this->app->page->render($data);
     }
 
     /**
@@ -1174,7 +1251,7 @@ class ContentController implements AppInjectableInterface
         }
 
         // Sets extended webpage title
-        $titleExtended = " | My Content Database";
+        $titleExtended = " | Eshop";
 
         // Data array
         $data = [
@@ -1203,7 +1280,17 @@ class ContentController implements AppInjectableInterface
         $title = "Users";
 
         // Sets extended webpage title
-        $titleExtended = " | My Content Database";
+        $titleExtended = " | Eshop";
+
+        // Framework variables
+        $response = $this->app->response;
+        $session = $this->app->session;
+
+        // Verifies if user is logged in
+        if (!$session->get("loggedIn")) {
+            $response->redirect("login");
+        };
+
 
         // Connects to db
         $this->app->db->connect();
@@ -1244,7 +1331,17 @@ class ContentController implements AppInjectableInterface
         $title = "Products";
 
         // Sets extended webpage title
-        $titleExtended = " | My Content Database";
+        $titleExtended = " | Eshop";
+
+        // Framework variables
+        $response = $this->app->response;
+        $session = $this->app->session;
+
+        // Verifies if user is logged in
+        if (!$session->get("loggedIn")) {
+            $response->redirect("login");
+        };
+
 
         // Connects to db
         $this->app->db->connect();
@@ -1285,7 +1382,7 @@ class ContentController implements AppInjectableInterface
         $title = "User";
 
         // Sets extended webpage title
-        $titleExtended = " | My Content Database";
+        $titleExtended = " | Eshop";
 
         // Connects to db
         $this->app->db->connect();
@@ -1358,7 +1455,16 @@ class ContentController implements AppInjectableInterface
         $title = "Show all content with sorting and pagination";
 
         // Sets extended webpage title
-        $titleExtended = " | My Content Database";
+        $titleExtended = " | Eshop";
+
+        // Framework variables
+        $response = $this->app->response;
+        $session = $this->app->session;
+
+        // Verifies if user is logged in
+        if (!$session->get("loggedIn")) {
+            $response->redirect("login");
+        };
 
         // Retrieves title
         $searchTitle = getGet("searchTitle") ?? null;
