@@ -12,7 +12,7 @@ use Olbe19\TextFilter\MyTextFilter;
  * @SuppressWarnings(PHPMD)
  *
  */
-class ContentController2 implements AppInjectableInterface
+class ContentController implements AppInjectableInterface
 {
     use AppInjectableTrait;
 
@@ -95,7 +95,7 @@ class ContentController2 implements AppInjectableInterface
         $this->app->db->connect();
 
         // SQL statement
-        $sql = "SELECT * FROM products;";
+        $sql = "SELECT * FROM products WHERE deleted IS NULL;";
 
         // Fetches data from db and stores in $resultset
         $resultset = $this->app->db->executeFetchAll($sql);
@@ -140,6 +140,7 @@ class ContentController2 implements AppInjectableInterface
                         DATE_FORMAT(COALESCE(updated, published), '%Y-%m-%d') AS published
                     FROM content
                     WHERE type=?
+                    AND deleted IS NULL
                     ORDER BY published DESC
                     ;
                     EOD;
