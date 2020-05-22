@@ -52,16 +52,16 @@ $defaultRoute = "?route=admin&"
                     <td><?= $row->updated ?></td>
                     <td><?= $row->deleted ?></td>
                     <td>
-                        <a class="icons" href="<?= url("edit?id=") . $row->id ?> " title="Edit this content">
+                        <a class="icons" href="<?= url("admin/edit?id=") . $row->id ?> " title="Edit this content">
                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                         </a>
-                        <a class="icons" href="<?= url("delete?id=") . $row->id ?>" title="Delete this content">
+                        <a class="icons" href="<?= url("admin/delete?id=") . $row->id ?>" title="Delete this content">
                             <i class="fa fa-trash-o" aria-hidden="true"></i>
                         </a>
                     </td>
                 </tr>
         </tbody>
-            <?php endforeach; ?>
+    <?php endforeach; ?>
     </table>
     <div class="container">
         <p>Items per page:

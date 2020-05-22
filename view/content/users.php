@@ -47,10 +47,10 @@ if (!$resultset) {
                     <td><?= $row->activated ?></td>
                     <td><?= $row->deleted ?></td>
                     <td>
-                        <a class="icons" href="<?= url("edituser?username=") . $row->username ?> " title="Edit this content">
+                        <a class="icons" href="<?= url("admin/edituser?username=") . $row->username ?> " title="Edit this content">
                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                         </a>
-                        <a class="icons" href="<?= url("deleteuser?username=") . $row->username ?>" title="Edit this content">
+                        <a class="icons" href="<?= url("admin/deleteuser?username=") . $row->username ?>" title="Edit this content">
                             <i class="fa fa-trash-o" aria-hidden="true"></i>
                         </a>
                     </td>

@@ -47,10 +47,10 @@ if (!$resultset) {
                     <td><?= $row->updated ?></td>
                     <td><?= $row->deleted ?></td>
                     <td>
-                        <a class="icons" href="<?= url("editproduct?id=") . $row->id ?> " title="Edit this content">
+                        <a class="icons" href="<?= url("admin/editproduct?id=") . $row->id ?> " title="Edit this content">
                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                         </a>
-                        <a class="icons" href="<?= url("deleteproduct?id=") . $row->id ?>" title="Delete this content">
+                        <a class="icons" href="<?= url("admin/deleteproduct?id=") . $row->id ?>" title="Delete this content">
                             <i class="fa fa-trash-o" aria-hidden="true"></i>
                         </a>
                     </td>

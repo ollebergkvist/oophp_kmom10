@@ -9,11 +9,8 @@ namespace Anax\View;
 ?>
 
 <div class="container page">
-    <article>
-        <header>
-            <h1><?= esc($content->title) ?></h1>
-            <p>Published: <time datetime="<?= esc($content->published_iso8601) ?>" pubdate><?= esc($content->published) ?></time></p>
-        </header>
-        <?= $content->data ?>
-    </article>
+    <h1><?= esc($content->title) ?></h1>
+    <p>Published: <time datetime="<?= esc($content->published_iso8601) ?>" pubdate><?= esc($content->published) ?></time></p>
+    <p><?= $content->data ?></p>
+    <img class="img-fluid img-thumbnail" src="../<?= $content->image ?>">
 </div>

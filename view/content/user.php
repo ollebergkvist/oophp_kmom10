@@ -16,22 +16,22 @@ namespace Anax\View;
         </div>
         <div class="form-group">
             <label>Firstname:</label>
-            <input type="text" class="form-control" name="firstname" placeholder="Enter first name" value="<?= esc($user->firstname) ?>" required>
+            <input type="text" class="form-control" name="firstname" placeholder="Enter first name" value="<?= esc($user->firstname) ?>">
         </div>
         <div class="form-group">
             <label>Lastname:</label>
-            <input type="text" class=" form-control" name="lastname" placeholder="Enter last name" value="<?= esc($user->lastname) ?>" required>
+            <input type="text" class=" form-control" name="lastname" placeholder="Enter last name" value="<?= esc($user->lastname) ?>">
         </div>
         <div class="form-group">
             <label>Email:</label>
-            <input type="email" class="form-control" name="email" placeholder="Enter email" value="<?= esc($user->email) ?>" required>
+            <input type="email" class="form-control" name="email" placeholder="Enter email" value="<?= esc($user->email) ?>">
         </div>
         <div class="form-group">
             <label>Password:</label>
-            <input type="password" class="form-control" name="password" placeholder="Enter password" value="<?= esc($user->password) ?>" required>
+            <input type="password" class="form-control" name="password" placeholder="Enter password" value="<?= esc($user->password) ?>">
         </div>
         <button class="btn btn-primary" type="submit" name="doSave"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
         <button class="btn btn-primary" type="reset"><i class="fa fa-undo" aria-hidden="true"></i> Reset</button>
-        <button class="btn btn-primary" type="submit" name="logout" formaction="logout"><i class="fas fa-sign-out-alt" aria-hidden="true"></i> Logout</button>
+        <button class="btn btn-primary" type="submit" name="logout" formaction="eshop/logout"><i class="fas fa-sign-out-alt" aria-hidden="true"></i> Logout</button>
     </form>
 </div>

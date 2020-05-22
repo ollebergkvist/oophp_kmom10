@@ -33,11 +33,11 @@ if (!$resultset) {
             foreach ($resultset as $row) :
                 $id++; ?>
                 <tr>
-                    <td><a href=<?= url("product") . "?route=product/" . esc($row->article_number) ?>><?= esc($row->article_number) ?></td>
+                    <td><a href=<?= url("eshop/product") . "?route=product/" . esc($row->article_number) ?>><?= esc($row->article_number) ?></td>
                     <td><?= $row->name ?></td>
                     <td><?= $row->category ?></td>
                     <td><?= $row->short_description ?></td>
-                    <td><img class="img-fluid img-thumbnail" src="<?= $row->image ?>"></td>
+                    <td><img class="img-fluid img-thumbnail" src="../<?= $row->image ?>"></td>
                     <td><?= $row->price ?></td>
                     <td><?= $row->amount ?></td>
                 </tr>

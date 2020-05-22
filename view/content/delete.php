@@ -9,7 +9,7 @@ namespace Anax\View;
 ?>
 <div class="container">
     <legend>Delete</legend>
-    <form method="post" action="<?= url("delete") ?>">
+    <form method="post" action="<?= url("admin/delete") ?>">
         <div class="form-group">
             <input type="hidden" name="contentId" value="<?= esc($content->id) ?>" />
             <label>Title: </label>

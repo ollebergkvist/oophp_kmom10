@@ -24,7 +24,7 @@ if (!$resultset2) {
         <div class="col-md-6 px-0">
             <h1 class="display-4 text-dark">Stone Island</h1>
             <p class="lead my-3 text-dark">New delivery from Stone Island including a hooded sweatshirt, a half-zip overshirt and a nylon seersucker suit now online.</p>
-            <p class="lead mb-0 text-dark"><a href="blogpost?route=blog/stone-island" class="text-white font-weight-bold text-dark">Continue reading...</a></p>
+            <p class="lead mb-0 text-dark"><a href="eshop/blogpost?route=blog/stone-island" class="text-white font-weight-bold text-dark">Continue reading...</a></p>
         </div>
     </div>
 </div>
@@ -37,7 +37,7 @@ if (!$resultset2) {
                 <h4><?= esc($row->title) ?></h4>
                 <p> <?= esc($row->data) ?></p>
                 <p>
-                    <a class="btn btn-secondary" href="<?= url("blogpost") . "?route=blog/" . esc($row->slug) ?>" role="button">Read more »</a>
+                    <a class="btn btn-secondary" href="<?= url("eshop/blogpost") . "?route=blog/" . esc($row->slug) ?>" role="button">Read more »</a>
                 </p>
             </div>
         <?php endforeach; ?>

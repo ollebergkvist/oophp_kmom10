@@ -33,25 +33,25 @@ namespace Anax\View;
             <div class="collapse navbar-collapse justify-content-center" id="navbarCollapse">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="<?= url("index") ?>">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="<?= url("eshop") ?>">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= url("blog") ?>">News</a>
+                        <a class="nav-link" href="<?= url("eshop/blog") ?>">News</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= url("products") ?>">Products</a>
+                        <a class="nav-link" href="<?= url("eshop/products") ?>">Products</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= url("about") ?>">About</a>
+                        <a class="nav-link" href="<?= url("eshop/about") ?>">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= url("doc") ?>">Doc</a>
+                        <a class="nav-link" href="<?= url("eshop/doc") ?>">Doc</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= url("register") ?>">Register</a>
+                        <a class="nav-link" href="<?= url("eshop/register") ?>">Register</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= url("login") ?>">Login</a>
+                        <a class="nav-link" href="<?= url("eshop/login") ?>">Login</a>
                     </li>
                 </ul>
             </div>

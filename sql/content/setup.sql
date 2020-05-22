@@ -22,6 +22,7 @@ CREATE TABLE `content` (
     `slug` CHAR(120) UNIQUE,
     `title` VARCHAR(120),
     `data` TEXT,
+    `image` VARCHAR(100) DEFAULT NULL,
     `type` CHAR(20),
     `filter` VARCHAR(80) DEFAULT NULL,
     `published` DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -85,6 +86,7 @@ INSERT INTO
         `type`,
         `title`,
         `data`,
+        `image`,
         `filter`
     )
 VALUES
@@ -93,7 +95,8 @@ VALUES
         "prada",
         "post",
         "Prada",
-        "More arrivals from Prada including jackets, shirts, accessories and a pair of sneakers made in calf leather now online.\n![Alt text](img/1.jpg)",
+        "More arrivals from Prada including jackets, shirts, accessories and a pair of sneakers made in calf leather now online.",
+        "img/1.jpg",
         "markdown,nl2br"
     ),
     (
@@ -101,23 +104,26 @@ VALUES
         "acne-studios-face-collection",
         "post",
         "Acne Studios Face collection",
-        "Hoodies and sweatshirts from the Acne Studios Spring / Summer 2020 Face collection now available online.\n![Alt text](img/2.jpg)",
+        "Hoodies and sweatshirts from the Acne Studios Spring / Summer 2020 Face collection now available online.",
+        "img/2.jpg",
         "markdown,nl2br"
     ),
     (
         "blogpost-3",
         "comme-des-garcons-homme-plus",
         "post",
-        "Comme des Garçons Homme Plus",
-        "More items from CDG Homme Plus, including a jacket, blazer and shorts featuring contrasting faux-fur applique panels throughout, now online.\n![Alt text](img/3.jpg)",
-        "markdown, nl2br"
+        "Comme des Garcons Homme Plus",
+        "More items from CDG Homme Plus, including a jacket, blazer and shorts featuring contrasting faux-fur applique panels throughout, now online.",
+        "img/3.jpg",
+        "markdown,nl2br"
     ),
     (
         "blogpost-4",
         "new-balance-m990v5",
         "post",
         "New Balance M990V5",
-        "The New Balance M990V5 sneakers in a light grey colorway now available online.\n![Alt text](img/4.jpg)",
+        "The New Balance M990V5 sneakers in a light grey colorway now available online.",
+        "img/4.jpg",
         "markdown,nl2br"
     ),
     (
@@ -125,7 +131,8 @@ VALUES
         "stone-island",
         "post",
         "Stone Island",
-        "New delivery from Stone Island including a hooded sweatshirt, a half-zip overshirt and a nylon seersucker suit now online.\n![Alt text](img/5.jpg)",
+        "New delivery from Stone Island including a hooded sweatshirt, a half-zip overshirt and a nylon seersucker suit now online.",
+        "img/5.jpg",
         "markdown,nl2br"
     );
 
@@ -301,7 +308,7 @@ VALUES
         "admin"
     ),
     (
-        "john doe",
+        "johndoe",
         "pass",
         "John",
         "Doe",
@@ -309,7 +316,7 @@ VALUES
         "user"
     ),
     (
-        "jane doe",
+        "janedoe",
         "pass",
         "Jane",
         "Doe",

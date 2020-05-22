@@ -7,6 +7,8 @@ use \Michelf\Markdown;
 /**
  * Filter and format text content.
  *
+ * @SuppressWarnings(PHPMD)
+ *
  */
 class MyTextFilter
 {

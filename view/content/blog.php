@@ -18,7 +18,7 @@ if (!$resultset) {
     <h3>News</h3>
     <hr>
     <?php foreach ($resultset as $row) : ?>
-        <h2><a href=<?= url("blogpost") . "?route=blog/" . esc($row->slug) ?>><?= esc($row->title) ?></a></h2>
+        <h2><a href=<?= url("eshop/blogpost") . "?route=blog/" . esc($row->slug) ?>><?= esc($row->title) ?></a></h2>
         <p class=>Published: <time datetime="<?= esc($row->published_iso8601) ?>" pubdate><?= esc($row->published) ?></time></p>
         <p class="mb-4"><?= esc($row->data) ?></p>
     <?php endforeach; ?>

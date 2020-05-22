@@ -8,9 +8,8 @@ return [
     "routes" => [
         [
             "info" => "Content Controller",
-            "mount" => "",
+            "mount" => "eshop",
             "handler" => "\Olbe19\Content\ContentController",
         ],
-
     ]
 ];

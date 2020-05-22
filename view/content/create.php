@@ -12,7 +12,7 @@ namespace Anax\View;
     <form method="post">
         <div class="form-group">
             <label>Title:</label>
-            <input class="form-control" type="text" name="contentTitle" default="A Title" />
+            <input class="form-control" type="text" name="contentTitle" required />
             <small id="emailHelp" class="form-text text-muted">Enter title to create</small>
         </div>
         <button class="btn btn-primary" type="submit" name="doCreate"> Create</button>

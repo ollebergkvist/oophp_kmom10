@@ -13,7 +13,7 @@ namespace Anax\View;
     <h4><?= esc($content->category) ?></h4>
     <div class="row">
         <div class="col">
-            <img class="img-fluid" src="<?= $content->image ?>">
+            <img class="img-fluid" src="../<?= $content->image ?>">
         </div>
         <div class="col-8">
             <p><?= $content->short_description ?></p>
