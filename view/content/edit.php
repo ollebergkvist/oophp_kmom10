@@ -36,11 +36,13 @@ $applyFilters = explode(',', $content->filter);
         <div class="form-group">
             <label>Type:</label>
             <input type="radio" class="form-control" name="contentType" value="post" required 
-            <?php if ($content->type == "post") : ?> checked
+            <?php if ($content->type == "post") : ?> 
+                checked
             <?php endif; ?> 
             /> Post<br>
             <input type="radio" class="form-control" name="contentType" value="page" required 
-            <?php if ($content->type == "page") : ?> checked 
+            <?php if ($content->type == "page") : ?> 
+                checked 
             <?php endif; ?> 
             /> Page<br>
         </div>

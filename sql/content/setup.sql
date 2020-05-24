@@ -50,9 +50,9 @@ CREATE TABLE `products` (
     `price` VARCHAR (12),
     `image` VARCHAR(100) DEFAULT NULL,
     `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    `updated` TIMESTAMP DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-    `activated` TIMESTAMP DEFAULT NULL,
-    `deleted` TIMESTAMP DEFAULT NULL
+    `updated` TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `activated` TIMESTAMP,
+    `deleted` TIMESTAMP
 ) ENGINE INNODB CHARACTER SET utf8 COLLATE utf8_swedish_ci;
 
 --
@@ -61,16 +61,16 @@ CREATE TABLE `products` (
 DROP TABLE IF EXISTS `users`;
 
 CREATE TABLE `users` (
-    `username` VARCHAR(320) PRIMARY KEY NOT NULL,
+    `username` VARCHAR(100) PRIMARY KEY NOT NULL,
     `firstname` TEXT,
     `lastname` TEXT,
     `password` VARCHAR (16) NOT NULL,
     `email` VARCHAR(320),
     `rights` VARCHAR(5) DEFAULT "user",
     `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    `updated` TIMESTAMP DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-    `activated` TIMESTAMP DEFAULT NULL,
-    `deleted` TIMESTAMP DEFAULT NULL
+    `updated` TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `activated` TIMESTAMP,
+    `deleted` TIMESTAMP
 ) ENGINE INNODB CHARACTER SET utf8 COLLATE utf8_swedish_ci;
 
 --

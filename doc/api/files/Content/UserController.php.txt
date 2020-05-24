@@ -27,7 +27,7 @@ class UserController implements AppInjectableInterface
 
     /**
      * This method is handler for the route:
-     * GET mountpoint/user
+     * ANY mountpoint/user
      *
      * @return object
      *
@@ -107,3 +107,4 @@ class UserController implements AppInjectableInterface
         }
     }
 }
+

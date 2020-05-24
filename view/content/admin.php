@@ -61,7 +61,7 @@ $defaultRoute = "?route=admin&"
                     </td>
                 </tr>
         </tbody>
-    <?php endforeach; ?>
+            <?php endforeach; ?>
     </table>
     <div class="container">
         <p>Items per page:

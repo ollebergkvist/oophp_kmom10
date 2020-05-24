@@ -1,0 +1,149 @@
+<?php
+
+namespace Olbe19\Content;
+
+/**
+ * A Content class
+ *
+ */
+class Content
+{
+
+    /** @var object $db    Anax Database object */
+    protected $db;
+
+    /**
+     * Constructor to create a database..
+     * @param obj   $db A database object
+     */
+    public function __construct($db)
+    {
+        $this->db = $db;
+    }
+
+    /**
+     * Verifies login attempt
+     *
+     * @param string $str username to verify
+     *
+     * @param string $str password to verify
+     *
+     * @return bool true or false depending on outcome
+     */
+
+    public function login($username, $password)
+    {
+        // Connects to db
+        $this->db->connect();
+
+        // SQL statement
+        $sql = "SELECT * FROM users WHERE username = ? AND password = ?;";
+
+        // Executes SQL statement and fetches data from db
+        $result = $this->db->executeFetch($sql, [$username, $password]);
+
+        // Verifies result
+        if ($result) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Registers new user
+     *
+     * @param string $str username to verify
+     *
+     * @param string $str password to verify
+     *
+     * @return bool true or false depending on outcome
+     */
+
+    public function register($username, $firstname, $lastname, $password, $email)
+    {
+        // Connects to db
+        $this->db->connect();
+
+        // Checks database if user exists already
+        $sql = "SELECT * FROM users WHERE username = ?;";
+        $result = $this->db->executeFetchAll($sql, [$username]);
+
+        // If user exists returns false
+        if (count($result) > 0) {
+            // Returns bool
+            return false;
+        } else {
+            // If user don't exists registers user and returns true
+            // SQL statement
+            $sql = "INSERT INTO users (`username`, `firstname`, `lastname`, `password`, `email`) VALUES (?, ?, ?, ?, ?)";
+
+            // Executes SQL statement and fetches data from db
+            $result = $this->db->executeFetch($sql, [$username, $firstname, $lastname, $password, $email]);
+
+            // Returns bool
+            return true;
+        }
+    }
+
+    /**
+     * Verifies permission
+     *
+     * @param string $str username to verify
+     *
+     * @return bool true or false depending on outcome
+     */
+
+    public function permission($username)
+    {
+        // Connects to db
+        $this->db->connect();
+
+        // SQL statement
+        $sql = "SELECT * FROM users WHERE username = ? AND rights = 'admin'";
+
+        // Executes SQL statement and fetches data from db
+        $result = $this->db->executeFetch($sql, [$username]);
+
+        // Verifies result
+        if ($result) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Resets database
+     *
+     * @param string $database database to reset
+     *
+     * @return void
+     */
+    public function resetDatabase($dbConfig)
+    {
+        $file   = "../sql/content/setup.sql";
+        $mysql  = "/usr/bin/mysql";
+        $dsnDetail = [];
+        preg_match("/mysql:host=(.+);dbname=([^;.]+)/", $dbConfig["config"]["dsn"], $dsnDetail);
+        $host = $dsnDetail[1];
+        $database = $dsnDetail[2];
+
+        if ($database == "olbe19") {
+            $mysql = "mysql";
+        }
+
+        $login = $dbConfig["config"]["username"];
+        $password = $dbConfig["config"]["password"];
+        $command = "$mysql -h{$host} -u{$login} -p{$password} $database < $file 2>&1";
+        $commandclean = "$mysql -h{$host} -u{$login} -pxxxxxx $database < $file 2>&1";
+        $output = [];
+        $status = null;
+        exec($command, $output, $status);
+        $output = "<p>The command was: <code>$commandclean</code>.<br>The command exit status was $status."
+            . "<br>The output from the command was:</p><pre>"
+            . print_r($output, 1);
+
+        return $database;
+    }
+}
+

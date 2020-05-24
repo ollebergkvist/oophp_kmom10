@@ -524,3 +524,4 @@ EOD;
         return $this->app->page->render($data);
     }
 }
+

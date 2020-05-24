@@ -19,7 +19,54 @@
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/jquery.smooth-scroll.js"></script>
     <script src="../js/prism.min.js"></script>
-    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->    <script type="text/javascript">
+        function loadExternalCodeSnippets() {
+            Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+                var src = pre.getAttribute('data-src');
+                var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+                var language = 'php';
+
+                var code = document.createElement('code');
+                code.className = 'language-' + language;
+
+                pre.textContent = '';
+
+                code.textContent = 'Loading…';
+
+                pre.appendChild(code);
+
+                var xhr = new XMLHttpRequest();
+
+                xhr.open('GET', src, true);
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4) {
+
+                        if (xhr.status < 400 && xhr.responseText) {
+                            code.textContent = xhr.responseText;
+
+                            Prism.highlightElement(code);
+                        }
+                        else if (xhr.status >= 400) {
+                            code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                        }
+                        else {
+                            code.textContent = '✖ Error: File does not exist or is empty';
+                        }
+                    }
+                };
+
+                xhr.send(null);
+            });
+        }
+
+        $(document).ready(function(){
+            loadExternalCodeSnippets();
+        });
+        $('#source-view').on('shown', function () {
+            loadExternalCodeSnippets();
+        })
+    </script>
     <link rel="shortcut icon" href="../images/favicon.ico"/>
     <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
     <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
@@ -84,19 +131,19 @@
 <div id="___" class="container-fluid">    <section class="row-fluid">
         <div class="span2 sidebar">    <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
-            <div class="accordion-heading">                    <a class="accordion-toggle" data-toggle="collapse" data-target="#namespace-1440431448"></a>                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
+            <div class="accordion-heading">                    <a class="accordion-toggle" data-toggle="collapse" data-target="#namespace-791327493"></a>                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-1440431448" class="accordion-body collapsein">
+            <div id="namespace-791327493" class="accordion-body collapsein">
                 <div class="accordion-inner">    <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
-            <div class="accordion-heading">                    <a class="accordion-togglecollapsed" data-toggle="collapse" data-target="#namespace-420731953"></a>                <a href="../namespaces/Olbe19.html" style="margin-left: 30px; padding-left: 0">Olbe19</a>
+            <div class="accordion-heading">                    <a class="accordion-togglecollapsed" data-toggle="collapse" data-target="#namespace-80038313"></a>                <a href="../namespaces/Olbe19.html" style="margin-left: 30px; padding-left: 0">Olbe19</a>
             </div>
-            <div id="namespace-420731953" class="accordion-body collapse">
+            <div id="namespace-80038313" class="accordion-body collapse">
                 <div class="accordion-inner">    <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
-            <div class="accordion-heading">                    <a class="accordion-togglecollapsed" data-toggle="collapse" data-target="#namespace-855563840"></a>                <a href="../namespaces/Olbe19.Content.html" style="margin-left: 30px; padding-left: 0">Content</a>
+            <div class="accordion-heading">                    <a class="accordion-togglecollapsed" data-toggle="collapse" data-target="#namespace-1070736594"></a>                <a href="../namespaces/Olbe19.Content.html" style="margin-left: 30px; padding-left: 0">Content</a>
             </div>
-            <div id="namespace-855563840" class="accordion-body collapse">
+            <div id="namespace-1070736594" class="accordion-body collapse">
                 <div class="accordion-inner">
                     <ul>                            <li class="class"><a href="../classes/Olbe19.Content.AdminController.html">AdminController</a></li>                            <li class="class"><a href="../classes/Olbe19.Content.Content.html">Content</a></li>                            <li class="class"><a href="../classes/Olbe19.Content.ContentController.html">ContentController</a></li>                            <li class="class"><a href="../classes/Olbe19.Content.UserController.html">UserController</a></li>                    </ul>
                 </div>
@@ -104,9 +151,9 @@
         </div>
     </div>    <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
-            <div class="accordion-heading">                    <a class="accordion-togglecollapsed" data-toggle="collapse" data-target="#namespace-2033681681"></a>                <a href="../namespaces/Olbe19.TextFilter.html" style="margin-left: 30px; padding-left: 0">TextFilter</a>
+            <div class="accordion-heading">                    <a class="accordion-togglecollapsed" data-toggle="collapse" data-target="#namespace-1774774781"></a>                <a href="../namespaces/Olbe19.TextFilter.html" style="margin-left: 30px; padding-left: 0">TextFilter</a>
             </div>
-            <div id="namespace-2033681681" class="accordion-body collapse">
+            <div id="namespace-1774774781" class="accordion-body collapse">
                 <div class="accordion-inner">
                     <ul>                            <li class="class"><a href="../classes/Olbe19.TextFilter.MyTextFilter.html">MyTextFilter</a></li>                    </ul>
                 </div>
@@ -128,26 +175,38 @@
     <section class="row-fluid">
         <div class="span10 offset2">
             <div class="row-fluid">
-                <div class="span8 content namespace">
-                    <nav><a href="../namespaces/default.html">\</a>                    </nav>
-                    <h1><small>\</small>Olbe19</h1>                    <h2>Namespaces</h2>
-                    <table class="table table-hover">                            <tr>
-                                <td><a href="../namespaces/Olbe19.Content.html">Content</a></td>
-                            </tr>                            <tr>
-                                <td><a href="../namespaces/Olbe19.TextFilter.html">TextFilter</a></td>
-                            </tr>                    </table>                </div>
+                <div class="span8 content file">
+                    <nav>                    </nav>
+
+                    <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
+                    <h1><small>Content</small>UserController.php</h1>
+                    <p><em></em></p>                    <h2>Classes</h2>
+                    <table class="table table-hover">                        <tr>
+                            <td><a href="../classes/Olbe19.Content.UserController.html">UserController</a></td>
+                            <td><em>A ContentController Class</em></td>
+                        </tr>                    </table>                </div>
 
                 <aside class="span4 detailsbar">
-                    <dl>
-                        <dt>Namespace hierarchy</dt>
-                        <dd class="hierarchy">
-                                    <div class="namespace-wrapper"><a href="../namespaces/default.html">\</a></div>                            <div class="namespace-wrapper">\Olbe19</div>
-                        </dd>
+                    <dl>                            <dt>Package</dt>
+                            <dd><div class="namespace-wrapper">\Default</div></dd>
                     </dl>
+                    <h2>Tags</h2>
+                    <table class="table table-condensed">                            <tr><td colspan="2"><em>None found</em></td></tr>                    </table>
+
                 </aside>
             </div>
         </div>
     </section>
+
+    <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="source-view-label"></h3>
+        </div>
+        <div class="modal-body">
+            <pre data-src="../files/Content/UserController.php.txt" class="language-php line-numbers"></pre>
+        </div>
+    </div>
     <footer class="row-fluid">
         <section class="span10 offset2">
             <section class="row-fluid">
