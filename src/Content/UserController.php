@@ -6,7 +6,7 @@ use Anax\Commons\AppInjectableInterface;
 use Anax\Commons\AppInjectableTrait;
 
 /**
- * A ContentController Class
+ * A UserController Class
  */
 class UserController implements AppInjectableInterface
 {
@@ -22,7 +22,7 @@ class UserController implements AppInjectableInterface
     public function initialize(): void
     {
         // Initalise a new content object, with the content-database as argument.
-        $this->content = new Content($this->app->db);
+        $this->user = new User($this->app->db);
     }
 
     /**
@@ -49,17 +49,11 @@ class UserController implements AppInjectableInterface
             $response->redirect("eshop/login");
         };
 
-        // Connects to db
-        $this->app->db->connect();
-
         // Retrieve content id
         $userName = $this->app->session->get("loggedIn");
 
-        // SQL statement
-        $sql = "SELECT * FROM users WHERE username = ?;";
-
-        // Fetches data from db and stores in $resultset
-        $user = $this->app->db->executeFetch($sql, [$userName]);
+        // Calls user method
+        $user = $this->user->getUser($userName);
 
         // Data array
         $data = [
@@ -84,9 +78,6 @@ class UserController implements AppInjectableInterface
      */
     public function indexActionPost(): object
     {
-        // Connects to db
-        $this->app->db->connect();
-
         if (hasKeyPost("doSave")) {
             $params = getPost([
                 "firstname",
@@ -96,11 +87,8 @@ class UserController implements AppInjectableInterface
                 "username"
             ]);
 
-            // SQL statement
-            $sql = "UPDATE users SET firstname = ?, lastname = ?, email = ?, password = ? WHERE username = ?;";
-
-            // Executes SQL statement
-            $this->app->db->execute($sql, array_values($params));
+            // Calls user method
+            $this->user->updateUser($params);
 
             // Redirects
             return $this->app->response->redirect("user");

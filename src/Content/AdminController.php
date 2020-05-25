@@ -6,7 +6,7 @@ use Anax\Commons\AppInjectableInterface;
 use Anax\Commons\AppInjectableTrait;
 
 /**
- * A ContentController Class
+ * A AdminController Class
  *
  * @SuppressWarnings(PHPMD)
  *
@@ -25,7 +25,7 @@ class AdminController implements AppInjectableInterface
     public function initialize(): void
     {
         // Initalise a new content object, with the content-database as argument.
-        $this->content = new Content($this->app->db);
+        $this->admin = new Admin($this->app->db);
     }
 
     /**
@@ -59,11 +59,8 @@ class AdminController implements AppInjectableInterface
         $this->app->db->connect();
 
         if ($searchTitle) {
-            // SQL statement
-            $sql = "SELECT * FROM content WHERE title LIKE ?;";
-
             // Fetches data from db and stores in $resultset
-            $resultset = $this->app->db->executeFetchAll($sql, [$searchTitle]);
+            $resultset = $this->admin->getItem($searchTitle);
         } else {
             // Get number of hits per page
             $hits = getGet("hits", 8);
@@ -71,11 +68,8 @@ class AdminController implements AppInjectableInterface
                 die("Not valid for hits.");
             }
 
-            // SQL statement
-            $sql = "SELECT COUNT(id) AS max FROM content;";
-
             // Get max number of pages
-            $max = $this->app->db->executeFetchAll($sql);
+            $max = $this->admin->getMaxNumberOfItems();
             $max = ceil($max[0]->max / $hits);
 
             // Get current page
@@ -99,11 +93,8 @@ class AdminController implements AppInjectableInterface
                 die("Not valid input for sorting.");
             }
 
-            // SQL statement
-            $sql = "SELECT * FROM content ORDER BY $orderBy $order LIMIT $hits OFFSET $offset;";
-
-            // Fetches data from db and stores in $resultset
-            $resultset = $this->app->db->executeFetchAll($sql);
+            // Calls sortBlogposts method and stores data in $resultset
+            $resultset = $this->admin->sortItems($orderBy, $order, $hits, $offset);
         }
 
         // Data array
@@ -180,11 +171,8 @@ class AdminController implements AppInjectableInterface
         if (hasKeyPost("doCreate")) {
             $title = getPost("contentTitle");
 
-            // SQL statement
-            $sql = "INSERT INTO content (title) VALUES (?);";
-
-            // Executes SQL statement
-            $this->app->db->execute($sql, [$title]);
+            // Calls createProduct method
+            $this->admin->createBlogpost($title);
 
             // Retrieves id
             $id = $this->app->db->lastInsertId();
@@ -249,11 +237,8 @@ class AdminController implements AppInjectableInterface
         if (hasKeyPost("doCreate")) {
             $name = getPost("name");
 
-            // SQL statement
-            $sql = "INSERT INTO products (name) VALUES (?);";
-
             // Executes SQL statement
-            $this->app->db->execute($sql, [$name]);
+            $this->admin->createProduct($name);
 
             // Retrieves id
             $id = $this->app->db->lastInsertId();
@@ -399,11 +384,9 @@ class AdminController implements AppInjectableInterface
 
         if (hasKeyPost("doDelete")) {
             $contentId = getPost("contentId");
-            // SQL statement
-            $sql = "UPDATE content SET deleted=NOW() WHERE id=?;";
 
             // Executes SQL statement
-            $this->app->db->execute($sql, [$contentId]);
+            $this->admin->deleteBlogpost($contentId);
 
             // Redirects
             return $this->app->response->redirect("admin");
@@ -478,11 +461,8 @@ class AdminController implements AppInjectableInterface
         if (hasKeyPost("doDelete")) {
             $username = getPost("username");
 
-            // SQL statement
-            $sql = "UPDATE users SET deleted=NOW() WHERE username=?;";
-
-            // Executes SQL statement
-            $this->app->db->execute($sql, [$username]);
+            // Calls deleteUser method
+            $this->admin->deleteUser($username);
 
             // Redirects
             return $this->app->response->redirect("admin/users");
@@ -558,11 +538,8 @@ class AdminController implements AppInjectableInterface
         if (hasKeyPost("doDelete")) {
             $productId = getPost("id");
 
-            // SQL statement
-            $sql = "UPDATE products SET deleted=NOW() WHERE id=?;";
-
             // Executes SQL statement
-            $this->app->db->execute($sql, [$productId]);
+            $this->admin->deleteProduct($productId);
 
             // Redirects
             return $this->app->response->redirect("admin/products2");
@@ -669,11 +646,8 @@ class AdminController implements AppInjectableInterface
 
             $params["contentFilter"] = implode(",", getPost(["contentFilter"]));
 
-            // SQL statement
-            $sql = "UPDATE content SET title=?, path=?, slug=?, data=?, type=?, filter=?, published=? WHERE id = ?;";
-
-            // Executes SQL statement
-            $this->app->db->execute($sql, array_values($params));
+            // Calls editBlogpost method
+            $this->admin->editBlogpost($params);
 
             // Redirects
             return $this->app->response->redirect("admin");
@@ -765,11 +739,8 @@ class AdminController implements AppInjectableInterface
                 "id"
             ]);
 
-            // SQL statement
-            $sql = "UPDATE products SET name=?, category=?, short_description=?, amount=?, price=?, image=? WHERE id = ?;";
-
-            // Executes SQL statement
-            $this->app->db->execute($sql, array_values($params));
+            // Calls editProduct method
+            $this->admin->editProduct($params);
 
             // Redirects
             return $this->app->response->redirect("admin/products2");
@@ -859,11 +830,8 @@ class AdminController implements AppInjectableInterface
                 "username"
             ]);
 
-            // SQL statement
-            $sql = "UPDATE users SET firstname=?, lastname=?, email=?, password=? WHERE username = ?;";
-
-            // Executes SQL statement
-            $this->app->db->execute($sql, array_values($params));
+            // Calls editUser method
+            $this->admin->editUser($params);
 
             // Redirects
             return $this->app->response->redirect("admin/users");
@@ -894,21 +862,14 @@ class AdminController implements AppInjectableInterface
             $response->redirect("eshop/login");
         };
 
-
-        // Connects to db
-        $this->app->db->connect();
-
-        // SQL statement
-        $sql = "SELECT * FROM users;";
-
-        // Fetches data from db and stores in $resultset
-        $resultset = $this->app->db->executeFetchAll($sql);
+        // Calls getUsers method and stores data in $resultset
+        $resultset = $this->admin->getUsers();
 
         // Data array
         $data = [
             "title" => $title,
             "titleExtended" => $titleExtended,
-            "resultset" => $resultset,
+            "resultset" => $resultset
         ];
 
         // Includes admin header
@@ -945,15 +906,8 @@ class AdminController implements AppInjectableInterface
             $response->redirect("eshop/login");
         };
 
-
-        // Connects to db
-        $this->app->db->connect();
-
-        // SQL statement
-        $sql = "SELECT * FROM products;";
-
         // Fetches data from db and stores in $resultset
-        $resultset = $this->app->db->executeFetchAll($sql);
+        $resultset = $this->admin->getProducts();
 
         // Data array
         $data = [

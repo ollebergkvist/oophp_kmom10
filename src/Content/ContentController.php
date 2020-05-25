@@ -44,20 +44,11 @@ class ContentController implements AppInjectableInterface
         // Sets extended webpage title
         $titleExtended = " | Eshop";
 
-        // Connects to db
-        $this->app->db->connect();
-
-        // SQL statements
-        $sql = "SELECT * FROM content WHERE `type` = 'post' LIMIT 3;";
-        $sql2 = "SELECT * FROM products LIMIT 3;";
-        $sql3 = "SELECT * FROM products WHERE article_number = '010';";
-        $sql4 = "SELECT * FROM products WHERE article_number = '11' OR article_number = '5' OR article_number = 8;";
-
-        // Fetches data from db and stores in $resultset
-        $resultset = $this->app->db->executeFetchAll($sql);
-        $resultset2 = $this->app->db->executeFetchAll($sql2);
-        $resultset3 = $this->app->db->executeFetchAll($sql3);
-        $resultset4 = $this->app->db->executeFetchAll($sql4);
+        // Calls methods to retrieve data from db
+        $resultset = $this->content->get3LatestBlogposts();
+        $resultset2 = $this->content->get3LatestProducts();
+        $resultset3 = $this->content->getFeaturedBrand();
+        $resultset4 = $this->content->getProductsOnSale();
 
         // Data array
         $data = [
@@ -91,14 +82,8 @@ class ContentController implements AppInjectableInterface
         // Sets extended webpage title
         $titleExtended = " | Eshop";
 
-        // Connects to db
-        $this->app->db->connect();
-
-        // SQL statement
-        $sql = "SELECT * FROM products;";
-
-        // Fetches data from db and stores in $resultset
-        $resultset = $this->app->db->executeFetchAll($sql);
+        // Calls
+        $resultset = $this->content->getProducts();
 
         // Data array
         $data = [
@@ -129,24 +114,8 @@ class ContentController implements AppInjectableInterface
         // Sets extended webpage title
         $titleExtended = " | Eshop";
 
-        // Connects to db
-        $this->app->db->connect();
-
-        // SQL statement
-        $sql = <<<EOD
-                    SELECT
-                        *,
-                        DATE_FORMAT(COALESCE(updated, published), '%Y-%m-%dT%TZ') AS published_iso8601,
-                        DATE_FORMAT(COALESCE(updated, published), '%Y-%m-%d') AS published
-                    FROM content
-                    WHERE type=?
-                    AND deleted IS NULL
-                    ORDER BY published DESC
-                    ;
-EOD;
-
         // Executes SQL and fetches data
-        $resultset = $this->app->db->executeFetchAll($sql, ["post"]);
+        $resultset = $this->content->getBlog();
 
         // Data array
         $data = [
@@ -174,33 +143,19 @@ EOD;
         // Retrieves route
         $route = getGet("route", "");
 
+        // Sets extended webpage title
+        $titleExtended = " | Eshop";
+
         // Connects to db
         $this->app->db->connect();
 
 
         if (substr($route, 0, 5) === "blog/") {
-            //  Matches blog/slug, display content by slug and type post
-            $sql = <<<EOD
-                    SELECT
-                        *,
-                        DATE_FORMAT(COALESCE(updated, published), '%Y-%m-%dT%TZ') AS published_iso8601,
-                        DATE_FORMAT(COALESCE(updated, published), '%Y-%m-%d') AS published
-                    FROM content
-                    WHERE
-                        slug = ?
-                        AND type = ?
-                        AND (deleted IS NULL OR deleted > NOW())
-                        AND published <= NOW()
-                    ORDER BY published DESC
-                    ;
-EOD;
-
             // Retrieves slug
             $slug = substr($route, 5);
 
-            // Executes SQL and fetches data
-            // Saves data in content
-            $content = $this->app->db->executeFetch($sql, [$slug, "post"]);
+            // Calls getBlogpost and stores result in $content
+            $content = $this->content->getBlogpost($slug);
 
             // Sets title
             $title = $content->title;
@@ -227,6 +182,7 @@ EOD;
         // Data array
         $data = [
             "title" => $title,
+            "titleExtended" => $titleExtended,
             "content" => $content
         ];
 
@@ -249,30 +205,18 @@ EOD;
         // Retrieves route
         $route = getGet("route", "");
 
-        // Connects to db
-        $this->app->db->connect();
-
-
+        // Sets extended webpage title
+        $titleExtended = " | Eshop";
 
         if (substr($route, 0, 8) === "product/") {
-            $sql = <<<EOD
-                    SELECT
-                        *
-                    FROM products
-                    WHERE
-                        article_number = ?
-                    ;
-EOD;
-
             // Retrieves slug
             $slug = substr($route, 8);
 
-            // Executes SQL and fetches data
-            // Saves data in content
-            $content = $this->app->db->executeFetch($sql, [$slug]);
+            // Calls getProduct and stores result in $content
+            $content = $this->content->getProduct($slug);
 
             // Sets title
-            $title = $content->title;
+            $title = $content->name;
 
             // Error handling
             if (!$content) {
@@ -284,6 +228,7 @@ EOD;
         // Data array
         $data = [
             "title" => $title,
+            "titleExtended" => $titleExtended,
             "content" => $content
         ];
 
@@ -461,8 +406,7 @@ EOD;
         // Data array
         $data = [
             "title" => $title,
-            "titleExtended" => $titleExtended,
-
+            "titleExtended" => $titleExtended
         ];
 
         // Adds route and sends data array to view

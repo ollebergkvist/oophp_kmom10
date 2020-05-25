@@ -8,17 +8,226 @@ namespace Olbe19\Content;
  */
 class Content
 {
-
-    /** @var object $db    Anax Database object */
+    /**
+     * @var object $db a anax database object
+     */
     protected $db;
 
     /**
-     * Constructor to create a database..
-     * @param obj   $db A database object
+     * Constructor to create a database
+     *
+     * @param obj $db a database object
      */
     public function __construct($db)
     {
         $this->db = $db;
+    }
+
+    /**
+     * Retrieves 3 newest blogposts
+     *
+     * @return obj $result
+     */
+
+    public function get3LatestBlogposts()
+    {
+        // Connects to db
+        $this->db->connect();
+
+        // SQL statement
+        $sql = "SELECT * FROM content WHERE `type` = 'post' LIMIT 3;";
+
+        // Executes SQL statement and fetches data from db
+        // Fetches data from db and stores in $resultset
+        $result = $this->db->executeFetchAll($sql);
+
+        // Returns result
+        return $result;
+    }
+
+    /**
+     * Retrieves 3 latest products
+     *
+     * @return obj $result
+     */
+
+    public function get3LatestProducts()
+    {
+        // Connects to db
+        $this->db->connect();
+
+        // SQL statement
+        $sql = "SELECT * FROM products LIMIT 3;";
+
+        // Executes SQL statement and fetches data from db
+        // Fetches data from db and stores in $resultset
+        $result = $this->db->executeFetchAll($sql);
+
+        // Returns result
+        return $result;
+    }
+
+    /**
+     * Retrieves featured brand
+     *
+     * @return obj $result
+     */
+
+    public function getFeaturedBrand()
+    {
+        // Connects to db
+        $this->db->connect();
+
+        // SQL statement
+        $sql = "SELECT * FROM products WHERE article_number = '010';";
+
+        // Executes SQL statement and fetches data from db
+        // Fetches data from db and stores in $resultset
+        $result = $this->db->executeFetchAll($sql);
+
+        // Returns result
+        return $result;
+    }
+
+    /**
+     * Retrieves featured brand
+     *
+     * @return obj $result
+     */
+
+    public function getProductsOnSale()
+    {
+        // Connects to db
+        $this->db->connect();
+
+        // SQL statement
+        $sql = "SELECT * FROM products WHERE article_number = '11' OR article_number = '5' OR article_number = 8;";
+
+        // Executes SQL statement and fetches data from db
+        // Fetches data from db and stores in $resultset
+        $result = $this->db->executeFetchAll($sql);
+
+        // Returns result
+        return $result;
+    }
+
+    /**
+     * Retrieves all products
+     *
+     * @return obj $result
+     */
+
+    public function getProducts()
+    {
+        // Connects to db
+        $this->db->connect();
+
+        // SQL statement
+        $sql = "SELECT * FROM products;";
+
+        // Executes SQL statement and fetches data from db
+        // Fetches data from db and stores in $resultset
+        $result = $this->db->executeFetchAll($sql);
+
+        // Returns result
+        return $result;
+    }
+
+    /**
+     * Retrieves all blogposts
+     *
+     * @return obj $result
+     */
+
+    public function getBlog()
+    {
+        // Connects to db
+        $this->db->connect();
+
+        // SQL statement
+        $sql = <<<EOD
+                    SELECT
+                        *,
+                        DATE_FORMAT(COALESCE(updated, published), '%Y-%m-%dT%TZ') AS published_iso8601,
+                        DATE_FORMAT(COALESCE(updated, published), '%Y-%m-%d') AS published
+                    FROM content
+                    WHERE type=?
+                    AND deleted IS NULL
+                    ORDER BY published DESC
+                    ;
+EOD;
+
+        // Executes SQL statement and fetches data from db
+        $result = $this->db->executeFetchAll($sql, ["post"]);
+
+        // Returns result
+        return $result;
+    }
+
+    /**
+     * Retrieves blogpost
+     *
+     * @param string $slug with product fo fetch
+     *
+     * @return obj $result
+     */
+
+    public function getBlogpost($slug)
+    {
+        // Connects to db
+        $this->db->connect();
+
+        // SQL statement
+        $sql = <<<EOD
+        SELECT
+            *,
+            DATE_FORMAT(COALESCE(updated, published), '%Y-%m-%dT%TZ') AS published_iso8601,
+            DATE_FORMAT(COALESCE(updated, published), '%Y-%m-%d') AS published
+        FROM content
+        WHERE
+            slug = ?
+            AND type = ?
+            AND (deleted IS NULL OR deleted > NOW())
+            AND published <= NOW()
+        ORDER BY published DESC
+        ;
+EOD;
+
+        // Executes SQL statement and fetches data from db
+        $result = $this->db->executeFetch($sql, [$slug, "post"]);
+
+        // Returns result
+        return $result;
+    }
+
+    /**
+     * Retrieves product
+     *
+     * @param string $slug with product fo fetch
+     *
+     * @return obj $result
+     */
+
+    public function getProduct($slug)
+    {
+        // Connects to db
+        $this->db->connect();
+
+        // SQL statement
+        $sql = <<<EOD
+        SELECT
+            *
+        FROM products
+        WHERE
+            article_number = ?
+        ;
+EOD;
+
+        // Executes SQL statement and fetches data from db
+        $result = $this->db->executeFetch($sql, [$slug]);
+
+        // Returns result
+        return $result;
     }
 
     /**
@@ -52,9 +261,15 @@ class Content
     /**
      * Registers new user
      *
-     * @param string $str username to verify
+     * @param string $username to register
      *
-     * @param string $str password to verify
+     * @param string $password to register
+     *
+     * @param string $firstname to register
+     *
+     * @param string $password to register
+     *
+     * @param string $email to register
      *
      * @return bool true or false depending on outcome
      */
@@ -88,7 +303,7 @@ class Content
     /**
      * Verifies permission
      *
-     * @param string $str username to verify
+     * @param string $username username to verify
      *
      * @return bool true or false depending on outcome
      */
@@ -115,7 +330,7 @@ class Content
     /**
      * Resets database
      *
-     * @param string $database database to reset
+     * @param string $dbConfig database to reset
      *
      * @return void
      */
